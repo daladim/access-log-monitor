@@ -47,3 +47,8 @@ MKDIR_P ?= mkdir -p
 .PHONY: clean
 clean:
 	$(RM) -r $(BUILD_DIR)
+
+.PHONY: doc
+doc:
+	mkdir -p build/doc
+	doxygen doc/Doxyfile

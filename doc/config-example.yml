@@ -1,0 +1,54 @@
+# This is a config file for access-log-supervisor
+# This file defines a set of rules that tell whether an access is allowed, forbidden or suspicious
+
+
+# (Optional) aliases definitions
+# An alias contain a list of (single or multiple):
+#   * values (in case it can be parsed as such)
+#   * other aliases (otherwise)
+addresses:
+- lan:
+    - 10.0.0.0/8
+    - 192.168.0.0/24
+    - 192.168.1.0/24
+- My home provider:
+    - 100.101.102.0/24
+- My office provider:
+    - 200.201.202.0/16
+- My own VPS:
+    - 111.222.111.222
+- My addresses:
+    - lan
+    - My home provider
+    - My office provider
+    - My own VPS
+
+users:
+- Me:
+    - john
+    - john
+    - John Lennon
+- My friends:
+    - paul
+    - george
+    - ringo
+
+times:
+- Weekends
+- Weekdays
+
+
+
+# Rules
+# The default rule is either OK, warning, critical
+default_rule: critical
+
+# Here are the rules each detected access will be compared against
+# The first matching rule will be used. If no rule matches, then the default_rule will apply
+# Each rule defines parameters (user, address, etc.)
+# Each parameter can be either a "hard-coded" value, an alias, or a "*" wildcard
+rules:
+- {user: Me, address: My Addresses, time: Weekdays, status: OK, description: "regular access"}
+- {user: root, address: 80.81.82.83, time: Weekdays, status: OK, description: "this rules uses values and aliases"}
+- {user: root, address: 80.81.82.83, time: Weekends, status: warning, description: "this rules does not use any aliases"}
+- {user: *, address: 1.2.3.0/30, time: *, status: warning, description: "I have a specific interest on this address"}

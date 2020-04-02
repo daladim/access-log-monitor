@@ -1,26 +1,43 @@
 # This Makefile is based on Job Vranish's article at https://spin.atomicobject.com/2016/08/26/makefile-c-projects/
 
-TARGET_EXEC ?= access-log-supervisor
+MAIN_EXEC ?= access-log-supervisor
+TEST_EXEC ?= test
 
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 
-SRCS := \
-	src/utils/Address.cpp \
+MAIN_SRCS := \
 	src/main.cpp
 
+TEST_SRCS :=
+
+MAIN_LDFLAGS = -lcidr
+TEST_LDFLAGS = -lcidr
 
 
+
+# Usual targets
+all: $(BUILD_DIR)/$(MAIN_EXEC)
+test: $(BUILD_DIR)/$(TEST_EXEC)
 
 # Automatic substitution
-OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
-DEPS := $(OBJS:.o=.d)
+MAIN_OBJS := $(MAIN_SRCS:%=$(BUILD_DIR)/%.o)
+TEST_OBJS := $(TEST_SRCS:%=$(BUILD_DIR)/%.o)
 
+ALL_DEPS := \
+	$(MAIN_OBJS:.o=.d) \
+	$(TEST_OBJS:.o=.d)
+
+# For automatic dependancy detection
 CPPFLAGS ?= -MMD -MP
+# Other flags
+CPPFLAGS += -std=c++17
 
 # Final executable
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
-	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
+$(BUILD_DIR)/$(MAIN_EXEC): $(MAIN_OBJS)
+	$(CXX) $(MAIN_OBJS) -o $@ $(MAIN_LDFLAGS)
+$(BUILD_DIR)/$(TEST_EXEC): $(TEST_OBJS)
+	$(CXX) $(TEST_OBJS) -o $@ $(TEST_LDFLAGS)
 
 # assembly
 $(BUILD_DIR)/%.s.o: %.s
@@ -38,7 +55,7 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 
--include $(DEPS)
+-include $(ALL_DEPS)
 
 MKDIR_P ?= mkdir -p
 

@@ -4,17 +4,25 @@
 #include <iostream>
 
 #include "CidrObject.hpp"
+#include "ParamRangeInterface.hpp"
 #include "Address.hpp"
 
 namespace LogSupervisor{
 
-class AddressRange : public CidrObject<RangeAllowed> {
+class AddressRange : public CidrObject, public ParamRangeInterface<Address> {
 public:
-    // Let's inherit constructors
-    using CidrObject<RangeAllowed>::CidrObject;
+    //! Constructor
+    AddressRange(const std::string& str);
+    //! Constructor
+    AddressRange(const char* str);
+    //! Copy constructor
+    AddressRange(const AddressRange& rhs);
+    //! Assignemnt operator
+    AddressRange& operator=(const AddressRange& rhs);
 
-    typedef Address SingleParam;
+    virtual ~AddressRange() {};
 
+    bool contains(const Address& param) const override;
 };
 
 } // namespace

@@ -7,9 +7,16 @@ BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 
 MAIN_SRCS := \
+	src/utils/AddressRange.cpp \
+	src/utils/Address.cpp \
 	src/main.cpp
 
-TEST_SRCS :=
+TEST_SRCS := \
+	src/utils/AddressRange.cpp \
+	src/utils/Address.cpp \
+	tests/TestAddresses.cpp
+
+
 
 MAIN_LDFLAGS = -lcidr
 TEST_LDFLAGS = -lcidr

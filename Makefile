@@ -14,7 +14,9 @@ MAIN_SRCS := \
 TEST_SRCS := \
 	src/utils/AddressRange.cpp \
 	src/utils/Address.cpp \
-	tests/TestAddresses.cpp
+	tests/TestAddresses.cpp \
+	tests/TestAliasStore.cpp \
+	tests/tests.cpp
 
 
 

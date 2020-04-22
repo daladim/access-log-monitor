@@ -15,6 +15,7 @@ TEST_SRCS := \
 	src/utils/AddressRange.cpp \
 	src/utils/Address.cpp \
 	src/utils/Timestamp.cpp \
+	src/utils/SQLiteObject.cpp \
 	src/utils/Database.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \

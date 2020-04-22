@@ -14,9 +14,11 @@ MAIN_SRCS := \
 TEST_SRCS := \
 	src/utils/AddressRange.cpp \
 	src/utils/Address.cpp \
+	src/utils/Timestamp.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \
 	tests/TestSQLiteObject.cpp \
+	tests/TestTimestamp.cpp \
 	tests/tests.cpp
 
 

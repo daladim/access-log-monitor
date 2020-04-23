@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "SQLiteObject.hpp"
+#include "sqlite/SQLiteDB.hpp"
 #include "User.hpp"
 #include "Address.hpp"
 #include "Timestamp.hpp"
@@ -44,7 +44,7 @@ public:
     std::vector<std::shared_ptr<const Authentication>> all() const;
 
 private:
-    SQLiteObject db;
+    SQLite::SQLiteDB db;
 };
 
 } // namespace

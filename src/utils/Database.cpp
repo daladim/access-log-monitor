@@ -2,6 +2,7 @@
 using namespace std;
 
 #include "Database.hpp"
+using namespace SQLite;
 
 namespace LogSupervisor{
 

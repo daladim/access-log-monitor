@@ -3,25 +3,44 @@ using namespace std;
 
 namespace SQLite{
 
-StatementIterator::StatementIterator(std::shared_ptr<SQLite::Statement> statement) :
-    statement(statement)
+StatementIterator::StatementIterator(SQLite::Statement& statement, bool thisIsAnEndIteratorOnly) :
+    statement(statement),
+    thisIsAnEndIteratorOnly(thisIsAnEndIteratorOnly)
 {
-    if(statement->hasStarted() == false){
-        statement->step();
+    if(statement.hasStarted() == false){
+        statement.step();
     }
 }
 
 const SQLite::Statement& StatementIterator::operator*(){
-    return *statement;
+    return statement;
 }
 
 const SQLite::Statement* StatementIterator::operator->(){
-    return statement.get();
+    return &statement;
 }
 
 SQLite::Statement& StatementIterator::operator++(){
-    statement->step(); // this may throw in case the caller iterates too much and has not checked the end of the iteration
-    return *statement;
+    statement.step(); // this may throw in case the caller iterates too much and has not checked the end of the iteration
+    return statement;
+}
+
+bool StatementIterator::isAtEnd() const{
+    if(thisIsAnEndIteratorOnly){
+        return true;
+    }
+    return statement.isExhausted();
+}
+
+bool StatementIterator::operator==(const StatementIterator& other) const{
+    return(   addressof(statement) == addressof(other.statement)
+           && isAtEnd()
+           && other.isAtEnd()
+          );
+}
+
+bool StatementIterator::operator!=(const StatementIterator& other) const{
+    return !(*this == other);
 }
 
 

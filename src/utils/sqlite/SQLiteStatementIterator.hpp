@@ -17,8 +17,10 @@ public:
     using reference = SQLite::Statement&;
     //using difference_type = long;
 
-    //! Create an iterator. This will act on (and modify) the underlying SQLiteStatement
-    StatementIterator(std::shared_ptr<SQLite::Statement> statement);
+    //! Create an iterator.
+    //! It will act on (and modify) the underlying SQLite::Statement
+    //! It is no longer valid if the parent SQLite::Statement is destroyed.
+    StatementIterator(SQLite::Statement& statement, bool thisIsAnEndIteratorOnly=false);
 
     StatementIterator(const StatementIterator&) = delete;   // Not sure copying an iterator makes sense since every copy would modifiy the same underlying statement
     StatementIterator& operator=(const StatementIterator&) = delete;           // Not sure modifying an iterator makes sense
@@ -26,13 +28,17 @@ public:
     //! Increment the iterator, calling step() on the underlying Statement
     SQLite::Statement& operator++();
     SQLite::Statement operator++(int) = delete; // I'm too lazy to implement the postfix incrementation operator (prefix incrementation should be enough), but it *might* be doable
-    bool operator==(StatementIterator other) const { return statement == other.statement; };
-    bool operator!=(StatementIterator other) const { return statement != other.statement; };
     const SQLite::Statement& operator*();
     const SQLite::Statement* operator->();
+    bool operator==(const StatementIterator& other) const;
+    bool operator!=(const StatementIterator& other) const;
+
 
 private:
-    std::shared_ptr<SQLite::Statement> statement;
+    SQLite::Statement& statement;
+
+    bool thisIsAnEndIteratorOnly;
+    bool isAtEnd() const;
 };
 
 } // namespace

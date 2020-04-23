@@ -14,7 +14,7 @@ TEST_CASE( "Database" ){
     d.insert(Authentication("Averell", "4.4.4.4", "2030-01-01 11:22:33"));
 
     vector<shared_ptr<const Authentication>> items = d.all();
-    REQUIRE( items.size() == 4 );
+    CHECK( items.size() == 4 );
 
     // Invalid usage
 

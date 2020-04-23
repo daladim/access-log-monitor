@@ -8,6 +8,8 @@
 
 namespace SQLite{
 
+class StatementIterator; // defined elsewhere
+
 //! A wrapper around sqlite3_stmt* ojects
 class Statement{
 public:
@@ -36,6 +38,11 @@ public:
     bool hasStarted() const { return hasStepped; }
     //! A getter for the internal state of the statement
     bool isExhausted() const { return requestFinished; }
+
+    //! Returns a StatementInterator for this statement
+    StatementIterator begin();
+    //! Returns a way to check for the last step of an iterator
+    const StatementIterator end();
 
 private:
     sqlite3_stmt* const preparedStatement;

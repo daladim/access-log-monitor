@@ -34,18 +34,18 @@ TEST_CASE( "AliasStore<string>" ){
     s.insert("letters and numbers",{"letters", "numbers"});
 
     // Normal operation
-    REQUIRE( compare<string>( s.parse("something")           , {"something"}                                                ));
-    REQUIRE( compare<string>( s.parse("lower-case letters")  , {"a", "b", "c", "d"}                                         ));
-    REQUIRE( compare<string>( s.parse("nu")                  , {"1", "2", "3", "4"}                                         ));
-    REQUIRE( compare<string>( s.parse("numbers")             , {"1", "2", "3", "4"}                                         ));
-    REQUIRE( compare<string>( s.parse("letters")             , {"a", "b", "c", "d", "A", "B", "C", "D"}                     ));
-    REQUIRE( compare<string>( s.parse("same letters")        , {"a", "b", "c", "d", "A", "B", "C", "D"}                     ));
-    REQUIRE( compare<string>( s.parse("more letters")        , {"a", "b", "c", "d", "A", "B", "C", "D", "z"}                ));
-    REQUIRE( compare<string>( s.parse("even more letters")   , {"a", "b", "c", "d", "A", "B", "C", "D", "z", "Z"}           ));
-    REQUIRE( compare<string>( s.parse("letters and numbers") , {"a", "b", "c", "d", "A", "B", "C", "D", "1", "2", "3", "4"} ));
+    CHECK( compare<string>( s.parse("something")           , {"something"}                                                ));
+    CHECK( compare<string>( s.parse("lower-case letters")  , {"a", "b", "c", "d"}                                         ));
+    CHECK( compare<string>( s.parse("nu")                  , {"1", "2", "3", "4"}                                         ));
+    CHECK( compare<string>( s.parse("numbers")             , {"1", "2", "3", "4"}                                         ));
+    CHECK( compare<string>( s.parse("letters")             , {"a", "b", "c", "d", "A", "B", "C", "D"}                     ));
+    CHECK( compare<string>( s.parse("same letters")        , {"a", "b", "c", "d", "A", "B", "C", "D"}                     ));
+    CHECK( compare<string>( s.parse("more letters")        , {"a", "b", "c", "d", "A", "B", "C", "D", "z"}                ));
+    CHECK( compare<string>( s.parse("even more letters")   , {"a", "b", "c", "d", "A", "B", "C", "D", "z", "Z"}           ));
+    CHECK( compare<string>( s.parse("letters and numbers") , {"a", "b", "c", "d", "A", "B", "C", "D", "1", "2", "3", "4"} ));
 
     // Invalid operations
-    REQUIRE_THROWS_AS( s.insert("numbers", {"This alias already exists"}) , std::range_error );
+    CHECK_THROWS_AS( s.insert("numbers", {"This alias already exists"}) , std::range_error );
 
     // This is not exactly defined behaviour, but at least, this should not crash
     s.insert("double", {"numbers", "numbers", "numbers"});
@@ -89,20 +89,20 @@ TEST_CASE( "AliasStore<Integer>" ){
 
 
     // Normal operation
-    REQUIRE( compare<Integer>( s.parse("11")                 ,{11}                                  ));
-    REQUIRE( compare<Integer>( s.parse("positive integers")  ,{ 1, 2, 3, 4}                         ));
-    REQUIRE( compare<Integer>( s.parse("ni")                 ,{-1,-2,-3,-4}                         ));
-    REQUIRE( compare<Integer>( s.parse("negative integers")  ,{-1,-2,-3,-4}                         ));
-    REQUIRE( compare<Integer>( s.parse("pintegers")          ,{ 1, 2, 3, 4,10,20,30,40}             ));
-    REQUIRE( compare<Integer>( s.parse("same pintegers")     ,{ 1, 2, 3, 4,10,20,30,40}             ));
-    REQUIRE( compare<Integer>( s.parse("more pintegers")     ,{ 1, 2, 3, 4,10,20,30,40, 100}        ));
-    REQUIRE( compare<Integer>( s.parse("even more pintegers"),{ 1, 2, 3, 4,10,20,30,40, 100, 200}   ));
-    REQUIRE( compare<Integer>( s.parse("all")                ,{ 1, 2, 3, 4,10,20,30,40,-1,-2,-3,-4} ));
+    CHECK( compare<Integer>( s.parse("11")                 ,{11}                                  ));
+    CHECK( compare<Integer>( s.parse("positive integers")  ,{ 1, 2, 3, 4}                         ));
+    CHECK( compare<Integer>( s.parse("ni")                 ,{-1,-2,-3,-4}                         ));
+    CHECK( compare<Integer>( s.parse("negative integers")  ,{-1,-2,-3,-4}                         ));
+    CHECK( compare<Integer>( s.parse("pintegers")          ,{ 1, 2, 3, 4,10,20,30,40}             ));
+    CHECK( compare<Integer>( s.parse("same pintegers")     ,{ 1, 2, 3, 4,10,20,30,40}             ));
+    CHECK( compare<Integer>( s.parse("more pintegers")     ,{ 1, 2, 3, 4,10,20,30,40, 100}        ));
+    CHECK( compare<Integer>( s.parse("even more pintegers"),{ 1, 2, 3, 4,10,20,30,40, 100, 200}   ));
+    CHECK( compare<Integer>( s.parse("all")                ,{ 1, 2, 3, 4,10,20,30,40,-1,-2,-3,-4} ));
 
     // Invalid operations
-    REQUIRE_THROWS_AS( s.insert("numbers", {"This alias already exists"}) , std::range_error );
-    REQUIRE_THROWS_AS( s.insert("fails", {"this is neither an alias nor a valid constructor parameter"}) , std::range_error );
-    REQUIRE_THROWS_AS( s.parse("this is neither an alias nor a valid constructor parameter") , std::range_error );
+    CHECK_THROWS_AS( s.insert("numbers", {"This alias already exists"}) , std::range_error );
+    CHECK_THROWS_AS( s.insert("fails", {"this is neither an alias nor a valid constructor parameter"}) , std::range_error );
+    CHECK_THROWS_AS( s.parse("this is neither an alias nor a valid constructor parameter") , std::range_error );
 
     // This is not exactly defined behaviour, but at least, this should not crash
     s.insert("double", {"negative integers", "negative integers", "negative integers"});

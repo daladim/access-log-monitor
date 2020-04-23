@@ -1,4 +1,5 @@
 #include "SQLiteStatement.hpp"
+#include "SQLiteStatementIterator.hpp"
 using namespace std;
 
 namespace SQLite{
@@ -60,6 +61,15 @@ const unsigned char * Statement::textValue(int iCol) const{
         throw logic_error("You are past the last row for this statement");
     }
     return sqlite3_column_text(preparedStatement, iCol);
+}
+
+
+
+SQLite::StatementIterator Statement::begin(){
+    return StatementIterator(*this);
+}
+const SQLite::StatementIterator Statement::end(){
+    return StatementIterator(*this, true);
 }
 
 } // namespace

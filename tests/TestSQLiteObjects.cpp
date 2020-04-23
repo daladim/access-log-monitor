@@ -5,6 +5,7 @@ using namespace std;
 
 #include "../src/utils/sqlite/SQLiteDB.hpp"
 #include "../src/utils/sqlite/SQLiteStatement.hpp"
+#include "../src/utils/sqlite/SQLiteStatementIterator.hpp"
 
 TEST_CASE( "SQLite wrapper" ){
     // Normal usage
@@ -42,4 +43,52 @@ TEST_CASE( "SQLite wrapper" ){
     REQUIRE_THROWS_AS( d.exec("This statement does not mean anything") , SQLite::SQLError );
 
     REQUIRE_THROWS_AS( d.exec("INSERT INTO COMAPANY (NAME) VALUES ('acme, but no ID is given although it is NOT NULL');") , SQLite::SQLError );
+}
+
+TEST_CASE( "Iterator for SQL queries" ){
+    SQLite::DB d(":memory:");
+    d.exec("CREATE TABLE dwarfs(name TEXT, ord INT)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Doc', 1)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Dopey', 2)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Bashful', 3)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Grumpy', 4)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Sneeze', 5)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Sleepy', 6)");
+    d.exec("INSERT INTO dwarfs (name, ord) VALUES ('Happy', 7)");
+
+    shared_ptr<SQLite::Statement> read = d.prepare("SELECT * FROM dwarfs;");
+    SQLite::StatementIterator iter(read);
+
+    SECTION("Manually incrementing a StatementIterator"){
+        // A StatementIterator runs the first step() automatically
+        REQUIRE( iter->intValue(1) == 1 );
+        REQUIRE( (*iter).intValue(1) == 1 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Doc", 4) == 0 );
+        REQUIRE( iter->intValue(1) == 1 );
+        REQUIRE( iter->intValue(1) == 1 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Doc", 4) == 0 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Doc", 4) == 0 );
+
+        ++iter;
+        REQUIRE( iter->intValue(1) == 2 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Dopey", 4) == 0 );
+        REQUIRE( iter->intValue(1) == 2 );
+        REQUIRE( iter->intValue(1) == 2 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Dopey", 4) == 0 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Dopey", 4) == 0 );
+
+        ++iter;
+        ++iter;
+        ++iter;
+        REQUIRE( iter->intValue(1) == 5 );
+        REQUIRE( strncmp( (const char*)iter->textValue(0), "Sneeze", 4) == 0 );
+
+        ++iter;
+        ++iter;
+        REQUIRE( iter->intValue(1) == 7 );
+        ++iter;
+        // We are now past the last row
+        REQUIRE_THROWS_AS( iter->intValue(1) , logic_error );
+        REQUIRE_THROWS_AS( ++iter, logic_error );
+    }
 }

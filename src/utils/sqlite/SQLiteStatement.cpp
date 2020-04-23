@@ -30,7 +30,7 @@ void Statement::bindText(int index, const std::string& value){
 
 int Statement::step(){
     if(requestFinished){
-        throw SQLError("It is invalid to call step() again on this prepared statement");
+        throw logic_error("It is invalid to call step() again on this prepared statement");
     }
     int rc = sqlite3_step(preparedStatement);
     hasStepped = true;
@@ -47,11 +47,17 @@ int Statement::intValue(int iCol) const{
     if(hasStepped == false){
         throw logic_error("step() must be called first");
     }
+    if(requestFinished){
+        throw logic_error("You are past the last row for this statement");
+    }
     return sqlite3_column_int(preparedStatement, iCol);
 }
 const unsigned char * Statement::textValue(int iCol) const{
     if(hasStepped == false){
         throw logic_error("step() must be called first");
+    }
+    if(requestFinished){
+        throw logic_error("You are past the last row for this statement");
     }
     return sqlite3_column_text(preparedStatement, iCol);
 }

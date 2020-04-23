@@ -27,17 +27,20 @@ public:
     //! Note: for better convenience, you may want to use a StatementIterator instead
     int step();
 
-    //! Return an int value from the current row
-    int intValue(int iCol);
-    //! Return an string value from the current row
-    const unsigned char *textValue(int iCol);
+    //! Return an int value from the current row, or throw if no row is available
+    int intValue(int iCol) const;
+    //! Return an string value from the current row, or throw if no row is available
+    const unsigned char *textValue(int iCol) const;
 
+    //! A getter for the internal state of the statement
+    bool hasStarted() const { return hasStepped; }
     //! A getter for the internal state of the statement
     bool isExhausted() const { return requestFinished; }
 
 private:
     sqlite3_stmt* const preparedStatement;
     sqlite3* const db;
+    bool hasStepped;
     bool requestFinished;
 };
 

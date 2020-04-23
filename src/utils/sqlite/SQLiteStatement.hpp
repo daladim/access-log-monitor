@@ -9,12 +9,12 @@
 namespace SQLite{
 
 //! A wrapper around sqlite3_stmt* ojects
-class SQLiteStatement{
+class Statement{
 public:
-    SQLiteStatement(sqlite3* db, sqlite3_stmt* const stmt);
-    SQLiteStatement(const SQLiteStatement&) = delete;
-    SQLiteStatement& operator=(const SQLiteStatement& rhs) = delete;
-    ~SQLiteStatement();
+    Statement(sqlite3* db, sqlite3_stmt* const stmt);
+    Statement(const Statement&) = delete;
+    Statement& operator=(const Statement& rhs) = delete;
+    ~Statement();
 
     //! Bind a user-controlled int input to the statement
     void bindInt(int index, int value);
@@ -24,7 +24,7 @@ public:
 
     //! Run one "step" (e.g. fetch one row) of a statement.
     //! If the return code is SQLITE_ROW, extra rows can be fetched by new calls to this method
-    //! Note: for better convenience, you may want to use a SQLiteStatementIterator instead
+    //! Note: for better convenience, you may want to use a StatementIterator instead
     int step();
 
     //! Return an int value from the current row

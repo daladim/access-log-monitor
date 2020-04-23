@@ -44,7 +44,7 @@ public:
     std::vector<std::shared_ptr<const Authentication>> all() const;
 
 private:
-    SQLite::SQLiteDB db;
+    SQLite::DB db;
 };
 
 } // namespace

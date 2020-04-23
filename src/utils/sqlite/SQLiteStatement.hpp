@@ -16,10 +16,10 @@ public:
     Statement& operator=(const Statement& rhs) = delete;
     ~Statement();
 
-    //! Bind a user-controlled int input to the statement
+    //! Bind a user-controlled int input to the statement. index starts at 1, not 0
     void bindInt(int index, int value);
 
-    //! Bind a user-controlled text input to the statement
+    //! Bind a user-controlled text input to the statement. index starts at 1, not 0
     void bindText(int index, const std::string& value);
 
     //! Run one "step" (e.g. fetch one row) of a statement.

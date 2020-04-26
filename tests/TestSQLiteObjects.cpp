@@ -3,12 +3,14 @@
 #include <cstring>
 using namespace std;
 
-#include "../src/utils/SQLiteObject.hpp"
-using namespace LogSupervisor;
+#include "../src/utils/sqlite/SQLiteDB.hpp"
+#include "../src/utils/sqlite/SQLiteStatement.hpp"
+#include "../src/utils/sqlite/SQLiteStatementIterator.hpp"
+using namespace SQLite;
 
 TEST_CASE( "SQLite wrapper" ){
     // Normal usage
-    SQLiteObject d(":memory:");
+    SQLiteDB d(":memory:");
     string command = "CREATE TABLE companies(names TEXT, age INT, address CHAR(50))";
     string simpleInsertion = "INSERT INTO companies (names, age, address) "\
                              "VALUES ('ACME', 100, '1 Main Street, 1111 Megapolis');";
@@ -42,4 +44,3 @@ TEST_CASE( "SQLite wrapper" ){
 
     REQUIRE_THROWS_AS( d.exec("INSERT INTO COMAPANY (NAME) VALUES ('acme, but no ID is given although it is NOT NULL');") , SQLError );
 }
-

@@ -1,5 +1,9 @@
 name: Automatic tests
 
+on:
+  push:
+    branches-ignore: [ no-branch-is-ignored ]
+
 jobs:
   build:
 

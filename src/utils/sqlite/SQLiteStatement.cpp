@@ -3,31 +3,31 @@ using namespace std;
 
 namespace SQLite{
 
-SQLiteStatement::SQLiteStatement(sqlite3* db, sqlite3_stmt* const stmt) :
+Statement::Statement(sqlite3* db, sqlite3_stmt* const stmt) :
         preparedStatement(stmt),
         db(db),
         requestFinished(false)
 {}
 
-SQLiteStatement::~SQLiteStatement(){
+Statement::~Statement(){
     sqlite3_finalize(preparedStatement);
 }
 
-void SQLiteStatement::bindInt(int index, int value){
+void Statement::bindInt(int index, int value){
     int rc = sqlite3_bind_int(preparedStatement, index, value);
     if(rc != SQLITE_OK){
         throw SQLError(to_string(rc) + ": unable to bind " + to_string(value) + " to the " + to_string(index) + "th argument of the statement.");
     }
 }
 
-void SQLiteStatement::bindText(int index, const std::string& value){
+void Statement::bindText(int index, const std::string& value){
     int rc = sqlite3_bind_text(preparedStatement, index, value.c_str(), value.size(), SQLITE_TRANSIENT);
     if(rc != SQLITE_OK){
         throw SQLError(to_string(rc) + ": Unable to bind " + value + " to the " + to_string(index) + "th argument of the statement.");
     }
 }
 
-int SQLiteStatement::step(){
+int Statement::step(){
     if(requestFinished){
         throw SQLError("It is invalid to call step() again on this prepared statement");
     }
@@ -41,10 +41,10 @@ int SQLiteStatement::step(){
     return rc;
 }
 
-int SQLiteStatement::intValue(int iCol){
+int Statement::intValue(int iCol){
     return sqlite3_column_int(preparedStatement, iCol);
 }
-const unsigned char * SQLiteStatement::textValue(int iCol){
+const unsigned char * Statement::textValue(int iCol){
     return sqlite3_column_text(preparedStatement, iCol);
 }
 

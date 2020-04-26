@@ -3,7 +3,7 @@ using namespace std;
 
 namespace SQLite{
 
-SQLiteDB::SQLiteDB(const std::string& location) :
+DB::DB(const std::string& location) :
     db(NULL)
 {
     int rc = sqlite3_open(location.c_str(), &db);
@@ -11,23 +11,23 @@ SQLiteDB::SQLiteDB(const std::string& location) :
         throw SQLError("Unable to create an in-memory database");
     }
 }
-SQLiteDB::~SQLiteDB(){
+DB::~DB(){
     if(db){
         sqlite3_close(db);
     }
 }
 
-std::shared_ptr<SQLiteStatement> SQLiteDB::prepare(const std::string& statement) const{
+std::shared_ptr<Statement> DB::prepare(const std::string& statement) const{
     sqlite3_stmt* handle;
     const char* syntaxError;
     int rc = sqlite3_prepare_v2(db, statement.c_str(), statement.size(), &handle, &syntaxError);
     if(rc != SQLITE_OK){
         throw SQLError(string("Invalid statement around '") + syntaxError + "'");
     }
-    return make_shared<SQLiteStatement>(db, handle);
+    return make_shared<Statement>(db, handle);
 }
 
-void SQLiteDB::exec(const string& statement){
+void DB::exec(const string& statement){
     char *errmsg;
     int rc = sqlite3_exec(db, statement.c_str(), NULL, NULL, &errmsg);
     if(rc != SQLITE_OK){

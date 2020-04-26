@@ -10,17 +10,17 @@
 namespace SQLite{
 
 //! A wrapper around sqlite3* objects
-class SQLiteDB{
+class DB{
 public:
-    SQLiteDB(const std::string& location);
-    SQLiteDB(const SQLiteDB&) = delete;
-    SQLiteDB& operator=(const SQLiteDB& rhs) = delete;
-    ~SQLiteDB();
+    DB(const std::string& location);
+    DB(const DB&) = delete;
+    DB& operator=(const DB& rhs) = delete;
+    ~DB();
 
     //! This is used for statements where the fetched data must be manipulated
     //! The returned object is no longer valid if the parent database object is destroyed.
     //! For security reasons, never concatenate user-controlled data into statement. You should rather use preparedStatements and bind arguments
-    std::shared_ptr<SQLiteStatement> prepare(const std::string& statement) const;
+    std::shared_ptr<Statement> prepare(const std::string& statement) const;
 
     //! This can be used for statements that do not fetch anything
     void exec(const std::string& statement);

@@ -6,6 +6,7 @@ namespace SQLite{
 Statement::Statement(sqlite3* db, sqlite3_stmt* const stmt) :
         preparedStatement(stmt),
         db(db),
+        hasStepped(false),
         requestFinished(false)
 {}
 
@@ -32,6 +33,7 @@ int Statement::step(){
         throw SQLError("It is invalid to call step() again on this prepared statement");
     }
     int rc = sqlite3_step(preparedStatement);
+    hasStepped = true;
     if(rc == SQLITE_DONE){
         // This request has terminated, and step() should not be called again
         requestFinished = true;
@@ -41,10 +43,16 @@ int Statement::step(){
     return rc;
 }
 
-int Statement::intValue(int iCol){
+int Statement::intValue(int iCol) const{
+    if(hasStepped == false){
+        throw logic_error("step() must be called first");
+    }
     return sqlite3_column_int(preparedStatement, iCol);
 }
-const unsigned char * Statement::textValue(int iCol){
+const unsigned char * Statement::textValue(int iCol) const{
+    if(hasStepped == false){
+        throw logic_error("step() must be called first");
+    }
     return sqlite3_column_text(preparedStatement, iCol);
 }
 

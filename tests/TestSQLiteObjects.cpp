@@ -26,6 +26,7 @@ TEST_CASE( "SQLite wrapper" ){
     REQUIRE_NOTHROW( write->step() );
 
     shared_ptr<SQLite::Statement> read = d.prepare("SELECT * FROM companies;");
+    REQUIRE_THROWS_AS( read->textValue(0) , std::logic_error /* because step() has not been called already */ );
     read->step();
     REQUIRE( strncmp( "ACME", (const char*)read->textValue(0), 5) == 0 );
     REQUIRE( 100 == read->intValue(1) );

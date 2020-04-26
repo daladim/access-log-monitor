@@ -16,12 +16,13 @@ TEST_SRCS := \
 	src/utils/Address.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \
+	tests/TestSQLiteObject.cpp \
 	tests/tests.cpp
 
 
 
-MAIN_LDFLAGS = -lcidr
-TEST_LDFLAGS = -lcidr
+MAIN_LDFLAGS = -lcidr -lsqlite3
+TEST_LDFLAGS = -lcidr -lsqlite3
 
 
 

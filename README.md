@@ -18,6 +18,7 @@ Other output formats are available (such as e-mail). See the list with `./access
 # How to build
 This project requires these dependancies:
 * libcidr-dev
+* libsqlite3-dev
 
 Run `make` to build
 

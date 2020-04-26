@@ -1,11 +1,5 @@
 name: Automatic tests
 
-on:
-  push:
-    branches: *
-  pull_request:
-    branches: [ master ]
-
 jobs:
   build:
 

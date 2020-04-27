@@ -19,7 +19,7 @@ public:
 
     //! This is used for statements where the fetched data must be manipulated
     //! The returned object is no longer valid if the parent database object is destroyed.
-    //! For security reasons, never concatenate user-controlled data into statement. You should rather use preparedStatements and bind arguments
+    //! For security reasons, never concatenate user-controlled data into statement. You should rather use "prepared statements" and bind arguments
     std::shared_ptr<Statement> prepare(const std::string& statement) const;
 
     //! This can be used for statements that do not fetch anything

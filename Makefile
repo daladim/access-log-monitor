@@ -18,7 +18,9 @@ TEST_SRCS := \
 	src/utils/sqlite/SQLiteDB.cpp \
 	src/utils/sqlite/SQLiteStatement.cpp \
 	src/utils/sqlite/SQLiteStatementIterator.cpp \
-	src/utils/Database.cpp \
+	src/database/Database.cpp \
+	src/database/DatabaseRequest.cpp \
+	src/database/DatabaseRequestIterator.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \
 	tests/TestSQLiteObjects.cpp \

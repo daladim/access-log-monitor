@@ -3,7 +3,7 @@ using namespace std;
 
 #include "Database.hpp"
 
-namespace LogSupervisor{
+namespace LogSupervisor::Database{
 
 Database::Database() :
     db(":memory:")
@@ -21,18 +21,10 @@ void Database::insert(const Authentication& auth){
     int rc = ps->step();
 }
 
-vector<shared_ptr<const Authentication>> Database::all() const{
-    vector<shared_ptr<const Authentication>> v;
-    shared_ptr<SQLite::Statement> ps = db.prepare("SELECT * from auths;");
-    while(ps->step() == SQLITE_ROW){
-        User user =      (const char*) ps->textValue(0);
-        Address origin = (const char*) ps->textValue(1);
-        Timestamp ts =   (const char*) ps->textValue(2);
-        v.push_back( make_shared<Authentication>(user, origin, ts) );
-    }
-    return v;
-};
 
-
+Request Database::all(){
+    shared_ptr<SQLite::Statement> statement = db.prepare("SELECT * from auths;");
+    return Request(statement);
+}
 
 } // namespace

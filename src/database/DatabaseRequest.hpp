@@ -20,6 +20,9 @@ public:
     //! End iterator. It is not valid if the parent Request is destroyed.
     Iterator end();
 
+    //! Get the first row. This is useful in case you are sure the request has a single result
+    std::shared_ptr<Authentication> firstRow();
+
 private:
     std::shared_ptr<SQLite::Statement> statement;
 

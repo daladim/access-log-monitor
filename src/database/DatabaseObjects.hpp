@@ -20,10 +20,10 @@ public:
         Error
     };
 
-    Authentication(const User& user, const Address& origin, const Timestamp& ts, std::optional<int> id = {}) :
+    Authentication(const User& user, const Address& origin, const Timestamp& ts, Validity val = Validity::Undefined, std::optional<int> id = {}) :
         id(id),
         user(user), origin(origin), timestamp(ts),
-        validity(Undefined)
+        validity(val)
     {}
 
     const std::optional<int> id;

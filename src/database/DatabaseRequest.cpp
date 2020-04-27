@@ -17,6 +17,11 @@ Request::Iterator Request::end(){
     return Request::Iterator(statement->end());
 }
 
+shared_ptr<Authentication> Request::firstRow(){
+    Request::Iterator it = statement->begin();
+    return *it;
+}
+
 
 
 } // namespace

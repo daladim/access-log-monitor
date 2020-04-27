@@ -5,16 +5,7 @@ using namespace std;
 #include "../src/database/Database.hpp"
 using namespace LogSupervisor;
 
-TEST_CASE( "Database" ){
-    // Normal usage
-    Database::Database d;
-    d.insert(Authentication("Joe",     "1.1.1.1", "2000-01-01 11:22:33"));
-    d.insert(Authentication("Jack",    "2.2.2.2", "2010-01-01 11:22:33"));
-    d.insert(Authentication("William", "3.3.3.3", "2020-01-01 11:22:33"));
-    d.insert(Authentication("Averell", "4.4.4.4", "2030-01-01 11:22:33"));
-
-    Database::Request req = d.all();
-
+void check_cpp_implem(Database::Request& req){
     SECTION("Manually incrementing Request::Iterator"){
         Database::Request::Iterator it = req.begin();
         CHECK( it->user.compare( "Joe" ) == 0 );
@@ -64,6 +55,37 @@ TEST_CASE( "Database" ){
             }
             ++i;
         }
+    }
+}
+
+
+TEST_CASE( "Database" ){
+    // Normal usage
+    Database::Database d;
+    d.insert(Authentication("Joe",     "1.1.1.1", "2000-01-01 11:22:33"));
+    d.insert(Authentication("Jack",    "2.2.2.2", "2010-01-01 11:22:33"));
+    d.insert(Authentication("William", "3.3.3.3", "2020-01-01 11:22:33"));
+    d.insert(Authentication("Averell", "4.4.4.4", "2030-01-01 11:22:33"));
+
+
+    SECTION("C++ implementation of requests"){
+        Database::Request req = d.all();
+        check_cpp_implem(req);
+    }
+
+
+    SECTION("Fetching a row"){
+        shared_ptr<Authentication> row2 = d.fetch(2);
+        CHECK( row2->user.compare("Jack") == 0 );
+        CHECK( row2->validity == Authentication::Validity::Undefined );
+    }
+
+    SECTION("Updating a field"){
+        d.updateValidity(2, Authentication::Validity::OK );
+        shared_ptr<Authentication> row2 = d.fetch(2);
+        CHECK( row2->user.compare("Jack") == 0 );
+        CHECK( row2->validity == Authentication::Validity::OK );
+
     }
 
 

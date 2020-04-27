@@ -17,8 +17,14 @@ public:
     //! Insert a record into the DB
     void insert(const Authentication& auth);
 
+    //! Update the validity field of a record
+    void updateValidity(int id, Authentication::Validity v);
+
     //! Retrieve all the records: begin iterator
     Request all();
+
+    //! Retrieve a single record
+    std::shared_ptr<Authentication> fetch(int id);
 
 private:
     SQLite::DB db;

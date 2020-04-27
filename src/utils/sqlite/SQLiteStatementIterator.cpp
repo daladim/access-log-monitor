@@ -1,9 +1,9 @@
-#include "SQLiteStatementIterator.hpp"
+#include "SQLiteStatement.hpp"
 using namespace std;
 
 namespace SQLite{
 
-StatementIterator::StatementIterator(SQLite::Statement& statement, bool thisIsAnEndIteratorOnly) :
+Statement::Iterator::Iterator(SQLite::Statement& statement, bool thisIsAnEndIteratorOnly) :
     statement(statement),
     thisIsAnEndIteratorOnly(thisIsAnEndIteratorOnly)
 {
@@ -12,34 +12,34 @@ StatementIterator::StatementIterator(SQLite::Statement& statement, bool thisIsAn
     }
 }
 
-const SQLite::Statement& StatementIterator::operator*(){
+const SQLite::Statement& Statement::Iterator::operator*(){
     return statement;
 }
 
-const SQLite::Statement* StatementIterator::operator->(){
+const SQLite::Statement* Statement::Iterator::operator->(){
     return &statement;
 }
 
-SQLite::Statement& StatementIterator::operator++(){
+SQLite::Statement& Statement::Iterator::operator++(){
     statement.step(); // this may throw in case the caller iterates too much and has not checked the end of the iteration
     return statement;
 }
 
-bool StatementIterator::isAtEnd() const{
+bool Statement::Iterator::isAtEnd() const{
     if(thisIsAnEndIteratorOnly){
         return true;
     }
     return statement.isExhausted();
 }
 
-bool StatementIterator::operator==(const StatementIterator& other) const{
+bool Statement::Iterator::operator==(const Iterator& other) const{
     return(   addressof(statement) == addressof(other.statement)
            && isAtEnd()
            && other.isAtEnd()
           );
 }
 
-bool StatementIterator::operator!=(const StatementIterator& other) const{
+bool Statement::Iterator::operator!=(const Iterator& other) const{
     return !(*this == other);
 }
 

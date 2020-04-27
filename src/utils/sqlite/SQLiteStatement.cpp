@@ -1,5 +1,4 @@
 #include "SQLiteStatement.hpp"
-#include "SQLiteStatementIterator.hpp"
 using namespace std;
 
 namespace SQLite{
@@ -68,15 +67,15 @@ const unsigned char * Statement::textValue(int iCol) const{
     return sqlite3_column_text(preparedStatement, iCol);
 }
 
-SQLite::StatementIterator Statement::begin(){
+SQLite::Statement::Iterator Statement::begin(){
     if(currentIterator){
         throw logic_error("Only one iterator is allowed");
     }
-    currentIterator = new StatementIterator(*this);
+    currentIterator = new Statement::Iterator(*this);
     return *currentIterator;
 }
-const SQLite::StatementIterator Statement::end(){
-    return StatementIterator(*this, true);
+const SQLite::Statement::Iterator Statement::end(){
+    return Statement::Iterator(*this, true);
 }
 
 } // namespace

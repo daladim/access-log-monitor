@@ -5,7 +5,6 @@ using namespace std;
 
 #include "../src/utils/sqlite/SQLiteDB.hpp"
 #include "../src/utils/sqlite/SQLiteStatement.hpp"
-#include "../src/utils/sqlite/SQLiteStatementIterator.hpp"
 
 TEST_CASE( "SQLite wrapper" ){
     // Normal usage
@@ -59,9 +58,9 @@ TEST_CASE( "Iterator for SQL queries" ){
     shared_ptr<SQLite::Statement> read = d.prepare("SELECT * FROM dwarfs;");
 
     SECTION("Using begin() and end() in a loop"){
-        SQLite::StatementIterator endIterator = read->end();
+        SQLite::Statement::Statement::Iterator endIterator = read->end();
         int i = 1;
-        for(SQLite::StatementIterator it = read->begin(); it != endIterator; ++it){
+        for(SQLite::Statement::Statement::Iterator it = read->begin(); it != endIterator; ++it){
             switch(i){
                 case 1: CHECK( strncmp( (const char*)it->textValue(0), "Doc", 4) == 0); break;
                 case 2: CHECK( strncmp( (const char*)it->textValue(0), "Dopey", 6) == 0); break;

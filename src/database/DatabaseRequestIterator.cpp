@@ -10,10 +10,11 @@ Request::Iterator::Iterator(SQLite::Statement::Iterator sqlsi) :
 {}
 
 std::shared_ptr<LogSupervisor::Authentication> Request::Iterator::currentAuth(){
-    User user =      (const char*) sqlsi->textValue(0);
-    Address origin = (const char*) sqlsi->textValue(1);
-    Timestamp ts =   (const char*) sqlsi->textValue(2);
-    return make_shared<LogSupervisor::Authentication>(user, origin, ts);
+    int id =                       sqlsi->intValue(0);
+    User user =      (const char*) sqlsi->textValue(1);
+    Address origin = (const char*) sqlsi->textValue(2);
+    Timestamp ts =   (const char*) sqlsi->textValue(3);
+    return make_shared<LogSupervisor::Authentication>(user, origin, ts, id);
 }
 
 std::shared_ptr<LogSupervisor::Authentication> Request::Iterator::operator++(){

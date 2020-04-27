@@ -1,6 +1,8 @@
 #ifndef _DATABASE_OBJECTS_HPP_
 #define _DATABASE_OBJECTS_HPP_
 
+#include <optional>
+
 #include "../utils/User.hpp"
 #include "../utils/Address.hpp"
 #include "../utils/Timestamp.hpp"
@@ -18,11 +20,13 @@ public:
         Error
     };
 
-    Authentication(const User& user, const Address& origin, const Timestamp& ts) :
+    Authentication(const User& user, const Address& origin, const Timestamp& ts, std::optional<int> id = {}) :
+        id(id),
         user(user), origin(origin), timestamp(ts),
         validity(Undefined)
     {}
 
+    const std::optional<int> id;
     const User user;
     const Address origin;
     const Timestamp timestamp;

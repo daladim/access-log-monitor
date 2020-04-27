@@ -1,13 +1,14 @@
 #ifndef _SQLITE_STATEMENT_ITERATOR_HPP_
 #define _SQLITE_STATEMENT_ITERATOR_HPP_
 
+#include <memory>
+
 #include "SQLiteDB.hpp"
 
 namespace SQLite{
 
-//! This C++ iterator runs step() on an underlying SQLiteStatement at every incrementation.
-//!
-//! StatementIterator act on (and modify) their underlying SQLite::Statement
+//! This C++ kind-of-iterator runs step() on an underlying SQLiteStatement at every incrementation.<br>
+//! Note that every copy of an iterator acts (and modifies) the same underlying statement.
 class StatementIterator{
 public:
     // iterator traits
@@ -17,12 +18,6 @@ public:
     using reference = SQLite::Statement&;
     //using difference_type = long;
 
-    //! Create an iterator.
-    //! It will act on (and modify) the underlying SQLite::Statement
-    //! It is no longer valid if the parent SQLite::Statement is destroyed.
-    StatementIterator(SQLite::Statement& statement, bool thisIsAnEndIteratorOnly=false);
-
-    StatementIterator(const StatementIterator&) = delete;   // Not sure copying an iterator makes sense since every copy would modifiy the same underlying statement
     StatementIterator& operator=(const StatementIterator&) = delete;           // Not sure modifying an iterator makes sense
 
     //! Increment the iterator, calling step() on the underlying Statement
@@ -33,9 +28,15 @@ public:
     bool operator==(const StatementIterator& other) const;
     bool operator!=(const StatementIterator& other) const;
 
+    friend class Statement;
 
 private:
     SQLite::Statement& statement;
+
+    //! Create an iterator.<br>
+    //! It will act on (and modify) the underlying SQLite::Statement. Thus, it is not advised to have multiple StatementIterator for the same underlying Statement.<br>
+    //! This is why this class hides its constructor. Usually, only SQLite::Statement::begin() is supposed to create StatementIterator.
+    StatementIterator(SQLite::Statement& statement, bool thisIsAnEndIteratorOnly=false);
 
     bool thisIsAnEndIteratorOnly;
     bool isAtEnd() const;

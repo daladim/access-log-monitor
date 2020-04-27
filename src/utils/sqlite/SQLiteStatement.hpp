@@ -39,7 +39,8 @@ public:
     //! A getter for the internal state of the statement
     bool isExhausted() const { return requestFinished; }
 
-    //! Returns a StatementInterator for this statement
+    //! Returns a StatementInterator for this statement.
+    //! Since it is not possible to "rewind" a statement, it is only possible to call this function once for every Statement (this will throw otherwise)
     StatementIterator begin();
     //! Returns a way to check for the last step of an iterator
     const StatementIterator end();
@@ -49,6 +50,8 @@ private:
     sqlite3* const db;
     bool hasStepped;
     bool requestFinished;
+
+    StatementIterator* currentIterator;
 };
 
 } // namespace

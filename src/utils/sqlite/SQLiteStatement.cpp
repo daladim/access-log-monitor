@@ -7,11 +7,16 @@ namespace SQLite{
 Statement::Statement(sqlite3* db, sqlite3_stmt* const stmt) :
         preparedStatement(stmt),
         db(db),
+        currentIterator(nullptr),
         hasStepped(false),
         requestFinished(false)
 {}
 
 Statement::~Statement(){
+    if(currentIterator){
+        delete currentIterator;
+    }
+
     sqlite3_finalize(preparedStatement);
 }
 
@@ -63,10 +68,12 @@ const unsigned char * Statement::textValue(int iCol) const{
     return sqlite3_column_text(preparedStatement, iCol);
 }
 
-
-
 SQLite::StatementIterator Statement::begin(){
-    return StatementIterator(*this);
+    if(currentIterator){
+        throw logic_error("Only one iterator is allowed");
+    }
+    currentIterator = new StatementIterator(*this);
+    return *currentIterator;
 }
 const SQLite::StatementIterator Statement::end(){
     return StatementIterator(*this, true);

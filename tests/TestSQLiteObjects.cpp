@@ -58,45 +58,10 @@ TEST_CASE( "Iterator for SQL queries" ){
 
     shared_ptr<SQLite::Statement> read = d.prepare("SELECT * FROM dwarfs;");
 
-    SECTION("Manually incrementing a StatementIterator"){
-        SQLite::StatementIterator iter(*read);
-
-        // A StatementIterator runs the first step() automatically
-        CHECK( iter->intValue(1) == 1 );
-        CHECK( (*iter).intValue(1) == 1 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Doc", 4) == 0 );
-        CHECK( iter->intValue(1) == 1 );
-        CHECK( iter->intValue(1) == 1 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Doc", 4) == 0 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Doc", 4) == 0 );
-
-        ++iter;
-        CHECK( iter->intValue(1) == 2 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Dopey", 4) == 0 );
-        CHECK( iter->intValue(1) == 2 );
-        CHECK( iter->intValue(1) == 2 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Dopey", 4) == 0 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Dopey", 4) == 0 );
-
-        ++iter;
-        ++iter;
-        ++iter;
-        CHECK( iter->intValue(1) == 5 );
-        CHECK( strncmp( (const char*)iter->textValue(0), "Sneeze", 4) == 0 );
-
-        ++iter;
-        ++iter;
-        CHECK( iter->intValue(1) == 7 );
-        ++iter;
-        // We are now past the last row
-        CHECK_THROWS_AS( iter->intValue(1) , logic_error );
-        CHECK_THROWS_AS( ++iter, logic_error );
-    }
-
     SECTION("Using begin() and end() in a loop"){
-        auto endIterator = read->end();
+        SQLite::StatementIterator endIterator = read->end();
         int i = 1;
-        for(auto it = read->begin(); it != endIterator; ++it){
+        for(SQLite::StatementIterator it = read->begin(); it != endIterator; ++it){
             switch(i){
                 case 1: CHECK( strncmp( (const char*)it->textValue(0), "Doc", 4) == 0); break;
                 case 2: CHECK( strncmp( (const char*)it->textValue(0), "Dopey", 6) == 0); break;
@@ -108,6 +73,11 @@ TEST_CASE( "Iterator for SQL queries" ){
             }
             ++i;
         }
+    }
+
+    SECTION("begin() throws when it makes no sense"){
+        read->begin();
+        CHECK_THROWS_AS( read->begin() , logic_error) ;
     }
 
     // Range-based loops require SQLite::Statement to be copiable

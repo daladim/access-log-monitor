@@ -11,6 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: 'true'
     - name: install dependancies
       run: sudo apt install libcidr-dev libsqlite3-dev
     - name: make test

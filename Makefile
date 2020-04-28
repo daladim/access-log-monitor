@@ -28,7 +28,8 @@ TEST_SRCS := \
 	tests/TestDatabase.cpp \
 	tests/tests.cpp
 
-
+MAIN_STATIC_LIBS := libs/yaml-cpp/build/libyaml-cpp.a
+TEST_STATIC_LIBS := libs/yaml-cpp/build/libyaml-cpp.a
 
 MAIN_LDFLAGS = -lcidr -lsqlite3
 TEST_LDFLAGS = -lcidr -lsqlite3
@@ -47,10 +48,17 @@ ALL_DEPS := \
 	$(MAIN_OBJS:.o=.d) \
 	$(TEST_OBJS:.o=.d)
 
+# Adding the static libs *after* defining .d files
+MAIN_OBJS += $(MAIN_STATIC_LIBS)
+TEST_OBJS += $(TEST_STATIC_LIBS)
+
 # For automatic dependancy detection
 CPPFLAGS ?= -MMD -MP
 # Other flags
 CPPFLAGS += -std=c++17
+
+# libs
+CPPFLAGS += -Ilibs/yaml-cpp/include
 
 # Final executable
 $(BUILD_DIR)/$(MAIN_EXEC): $(MAIN_OBJS)
@@ -77,6 +85,16 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 -include $(ALL_DEPS)
 
 MKDIR_P ?= mkdir -p
+
+
+# static libs
+libs/yaml-cpp/build/libyaml-cpp.a:
+	@echo "====================================================================="
+	@echo "=                        Building a dependancy                      ="
+	@echo "=  make sure you have run git submodule init; git submodule update  ="
+	@echo "====================================================================="
+	mkdir -p libs/yaml-cpp/build
+	cd libs/yaml-cpp/build; cmake .. ; make
 
 
 # Utilities

@@ -22,12 +22,14 @@ TEST_SRCS := \
 	src/database/Database.cpp \
 	src/database/DatabaseRequest.cpp \
 	src/database/DatabaseRequestIterator.cpp \
+	src/Config.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \
 	tests/TestParamList.cpp \
 	tests/TestSQLiteObjects.cpp \
 	tests/TestTimestamp.cpp \
 	tests/TestDatabase.cpp \
+	tests/TestConfigParsing.cpp \
 	tests/tests.cpp
 
 MAIN_STATIC_LIBS := libs/yaml-cpp/build/libyaml-cpp.a

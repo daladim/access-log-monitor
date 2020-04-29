@@ -15,6 +15,7 @@ TEST_SRCS := \
 	src/utils/AddressRange.cpp \
 	src/utils/Address.cpp \
 	src/utils/Timestamp.cpp \
+	src/utils/ParamList.cpp \
 	src/utils/sqlite/SQLiteDB.cpp \
 	src/utils/sqlite/SQLiteStatement.cpp \
 	src/utils/sqlite/SQLiteStatementIterator.cpp \
@@ -23,6 +24,7 @@ TEST_SRCS := \
 	src/database/DatabaseRequestIterator.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \
+	tests/TestParamList.cpp \
 	tests/TestSQLiteObjects.cpp \
 	tests/TestTimestamp.cpp \
 	tests/TestDatabase.cpp \

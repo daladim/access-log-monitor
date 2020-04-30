@@ -21,7 +21,7 @@ public:
     void updateValidity(int id, Authentication::Validity v);
 
     //! Retrieve all the records: begin iterator
-    Request all();
+    Request all() const;
 
     //! Retrieve a single record
     std::shared_ptr<Authentication> fetch(int id);

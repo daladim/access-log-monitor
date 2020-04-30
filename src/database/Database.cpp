@@ -27,7 +27,7 @@ void Database::insert(const Authentication& auth){
 }
 
 
-Request Database::all(){
+Request Database::all() const{
     shared_ptr<SQLite::Statement> statement = db.prepare("SELECT * from auths;");
     return Request(statement);
 }

@@ -12,6 +12,7 @@ MAIN_SRCS := \
 	src/main.cpp
 
 TEST_SRCS := \
+	tests/tests.cpp \
 	src/utils/AddressRange.cpp \
 	src/utils/Address.cpp \
 	src/utils/Timestamp.cpp \
@@ -29,8 +30,7 @@ TEST_SRCS := \
 	tests/TestSQLiteObjects.cpp \
 	tests/TestTimestamp.cpp \
 	tests/TestDatabase.cpp \
-	tests/TestConfigParsing.cpp \
-	tests/tests.cpp
+	tests/TestConfigParsing.cpp
 
 MAIN_STATIC_LIBS := libs/yaml-cpp/build/libyaml-cpp.a
 TEST_STATIC_LIBS := libs/yaml-cpp/build/libyaml-cpp.a

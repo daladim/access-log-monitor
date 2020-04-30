@@ -45,6 +45,11 @@ public:
         return *this;
     }
 
+    //! Equality check
+    bool operator==(const CidrObject& rhs) const{
+        return 0 == cidr_equals(m_cidr, rhs.m_cidr);
+    }
+
     virtual ~CidrObject(){
         cidr_free(m_cidr);
     }

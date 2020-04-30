@@ -17,7 +17,7 @@ public:
         Undefined,
         OK,
         Warning,
-        Error
+        Critical
     };
 
     Authentication(const User& user, const Address& origin, const Timestamp& ts, bool success,

@@ -44,8 +44,8 @@ times:
 
 
 # Rules
-# The default rule is either OK, warning, critical
-default_rule: critical
+# The default status is either OK, warning, critical
+default_status: critical
 
 # Here are the rules each detected access will be compared against
 # The first matching rule will be used. If no rule matches, then the default_rule will apply

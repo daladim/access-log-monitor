@@ -54,5 +54,5 @@ default_status: critical
 rules:
 - {users: Me,   addresses: My addresses, times: Weekdays, status: OK, description: "regular access"}
 - {users: root, addresses: 80.81.82.83,  times: Weekdays, status: OK, description: "this rules uses values and aliases"}
-- {users: root, addresses: 80.81.82.83,  times: Weekends, status: warning, description: "this rules does not use any aliases"}
-- {             addresses: 1.2.3.0/30,                    status: warning, description: "I have a specific interest on this address"}
+- {users: ringo,addresses: 127.0.0.1,    times: Weekends, status: warning, description: "this rules does not use any aliases"}
+- {             addresses: 1.2.3.0/29,                    status: warning, description: "I have a specific interest on these addresses"}

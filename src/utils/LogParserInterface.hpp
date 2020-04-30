@@ -2,6 +2,7 @@
 #define _LOG_PARSER_INTERFACE_HPP_
 
 #include <iostream>
+#include <vector>
 
 #include "../database/DatabaseObjects.hpp"
 
@@ -14,7 +15,7 @@ public:
     virtual void parseLog() = 0;
 
     //! Retrieve the Authentication objects that have been generated when parsing the log file
-    virtual const std::vector<LogSupervisor::Authentication> all() const = 0;
+    virtual std::vector<LogSupervisor::Authentication> all() = 0;
 };
 
 } // namespace

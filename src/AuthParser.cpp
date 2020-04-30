@@ -43,7 +43,7 @@ LogSupervisor::Authentication Auth::authFromMatches(const smatch& matches, bool 
 }
 
 
-const vector<LogSupervisor::Authentication> Auth::all() const{
+vector<LogSupervisor::Authentication> Auth::all(){
     return m_auths;
 }
 

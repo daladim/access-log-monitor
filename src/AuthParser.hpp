@@ -16,7 +16,7 @@ class Auth : public Interface{
 public:
     Auth(const std::string& filePath);
     void parseLog() override;
-    const std::vector<LogSupervisor::Authentication> all() const override;
+    std::vector<LogSupervisor::Authentication> all() override;
 
 private:
     std::ifstream logFile;

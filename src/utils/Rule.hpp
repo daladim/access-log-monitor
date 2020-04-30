@@ -25,6 +25,10 @@ public:
     const ParamList<AddressRange, Address> addresses;
     const std::string descr;
     const Authentication::Validity validity;
+
+    bool matches(const User& user, const Address& addr) const{
+        return users.contains(user) && addresses.contains(addr);
+    }
 };
 
 } // namespace

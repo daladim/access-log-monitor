@@ -23,8 +23,7 @@ Address::Address(const Address& rhs) :
     assertValid();
 }
 
-Address& Address::operator=(const Address& rhs)
-{
+Address& Address::operator=(const Address& rhs){
     CidrObject::operator=(rhs);
     assertValid();
     return *this;

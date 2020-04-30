@@ -20,17 +20,19 @@ public:
         Error
     };
 
-    Authentication(const User& user, const Address& origin, const Timestamp& ts, Validity val = Validity::Undefined, std::optional<int> id = {}) :
+    Authentication(const User& user, const Address& origin, const Timestamp& ts, bool success,
+                   Validity val = Validity::Undefined, std::optional<int> id = {}) :
         id(id),
-        user(user), origin(origin), timestamp(ts),
+        user(user), origin(origin), timestamp(ts), success(success),
         validity(val)
     {}
 
     const std::optional<int> id;
-    const User user;
-    const Address origin;
-    const Timestamp timestamp;
-    Validity validity;
+    const User user;            //!< The user this authentication concerns
+    const Address origin;       //!< The remote IP this connection comes from
+    const Timestamp timestamp;  //!< When this authentication happened
+    const bool success;         //!< whether the authentication attempt succeeded (it may have failed, e.g. if a wrong password was presented)
+    Validity validity;          //!< A place to store what we think about this authentication
 };
 
 

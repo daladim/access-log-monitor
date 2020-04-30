@@ -62,10 +62,10 @@ void check_cpp_implem(Database::Request& req){
 TEST_CASE( "Database" ){
     // Normal usage
     Database::Database d;
-    d.insert(Authentication("Joe",     "1.1.1.1", "2000-01-01 11:22:33"));
-    d.insert(Authentication("Jack",    "2.2.2.2", "2010-01-01 11:22:33"));
-    d.insert(Authentication("William", "3.3.3.3", "2020-01-01 11:22:33"));
-    d.insert(Authentication("Averell", "4.4.4.4", "2030-01-01 11:22:33"));
+    d.insert(Authentication("Joe",     "1.1.1.1", "2000-01-01 11:22:33", true));
+    d.insert(Authentication("Jack",    "2.2.2.2", "2010-01-01 11:22:33", false));
+    d.insert(Authentication("William", "3.3.3.3", "2020-01-01 11:22:33", false));
+    d.insert(Authentication("Averell", "4.4.4.4", "2030-01-01 11:22:33", false));
 
 
     SECTION("C++ implementation of requests"){
@@ -75,8 +75,16 @@ TEST_CASE( "Database" ){
 
 
     SECTION("Fetching a row"){
+        shared_ptr<Authentication> row1 = d.fetch(1);
+        CHECK( row1->user.compare("Joe") == 0 );
+        CHECK( row1->success == true );
+        CHECK( row1->validity == Authentication::Validity::Undefined );
+    }
+
+    SECTION("Fetching another row"){
         shared_ptr<Authentication> row2 = d.fetch(2);
         CHECK( row2->user.compare("Jack") == 0 );
+        CHECK( row2->success == false );
         CHECK( row2->validity == Authentication::Validity::Undefined );
     }
 

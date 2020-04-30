@@ -2,6 +2,7 @@
 #define _DATABASE_OBJECTS_HPP_
 
 #include <optional>
+#include <string>
 
 #include "../utils/User.hpp"
 #include "../utils/Address.hpp"
@@ -19,12 +20,15 @@ public:
         Warning,
         Critical
     };
+    // I am too lazy to create a .cpp file just to define a static const string, so preprocessor macros will do
+    #define DEFAULT_DESCR "<no description available>"
 
     Authentication(const User& user, const Address& origin, const Timestamp& ts, bool success,
-                   Validity val = Validity::Undefined, std::optional<int> id = {}) :
+                   Validity val = Validity::Undefined, const std::string& descr = DEFAULT_DESCR, std::optional<int> id = {}) :
         id(id),
         user(user), origin(origin), timestamp(ts), success(success),
-        validity(val)
+        validity(val),
+        description(descr)
     {}
 
     const std::optional<int> id;
@@ -32,6 +36,7 @@ public:
     const Address origin;       //!< The remote IP this connection comes from
     const Timestamp timestamp;  //!< When this authentication happened
     const bool success;         //!< whether the authentication attempt succeeded (it may have failed, e.g. if a wrong password was presented)
+    std::string description;    //!< A place to store a user-defined description
     Validity validity;          //!< A place to store what we think about this authentication
 };
 

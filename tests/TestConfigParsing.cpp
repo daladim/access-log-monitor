@@ -19,6 +19,7 @@ TEST_CASE( "Config file parsing" ){
         CHECK( r0.addresses.contains("10.1.2.3") == true );
         CHECK( r0.addresses.contains("111.222.111.222") == true );
         CHECK( r0.validity == Authentication::Validity::OK );
+        CHECK( r0.descr.compare("regular access") == 0 );
     }
 
     SECTION("A rule with wildcards"){
@@ -27,6 +28,7 @@ TEST_CASE( "Config file parsing" ){
         CHECK( r3.addresses.contains("1.2.3.1") == true );
         CHECK( r3.addresses.contains("2.2.2.2") == false );
         CHECK( r3.validity == Authentication::Validity::Warning );
+        CHECK( r3.descr.compare("I have a specific interest on these addresses") == 0 );
     }
 
 }

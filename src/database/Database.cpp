@@ -11,17 +11,18 @@ Database::Database() :
     // SQLite has no DATETIME format. Let's store everything as string
     db.exec("CREATE TABLE 'auths'('id' INTEGER PRIMARY KEY AUTOINCREMENT,                          "
             "                     'user' TEXT, 'origin' TEXT, 'timepoint' TEXT, 'success' INTEGER, "
-            "                     'validity' INTEGER );");
+            "                     'validity' INTEGER, 'description' TEXT );");
 }
 
 void Database::insert(const Authentication& auth){
-    shared_ptr<SQLite::Statement> ps = db.prepare("INSERT INTO auths (user, origin, timepoint, success, validity) " \
-                                                  "VALUES (?, ?, ?, ?, ?); ");
+    shared_ptr<SQLite::Statement> ps = db.prepare("INSERT INTO auths (user, origin, timepoint, success, validity, description) " \
+                                                  "VALUES (?, ?, ?, ?, ?, ?); ");
     ps->bindText(1, auth.user);
     ps->bindText(2, *(auth.origin.to_string()));
     ps->bindText(3, auth.timestamp.to_string());
     ps->bindInt(4, auth.success);
     ps->bindInt(5, auth.validity);
+    ps->bindText(6, auth.description);
     int rc = ps->step();
 }
 

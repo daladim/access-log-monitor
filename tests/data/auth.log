@@ -1,34 +1,55 @@
-Apr 29 10:18:20 machine-name useradd[13361]: failed adding user 'vboxadd', data deleted
-Apr 29 10:20:00 machine-name pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
-Apr 29 10:20:00 machine-name pkexec[14417]: john: Executing command [USER=root] [TTY=unknown] [CWD=/home/john] [COMMAND=/usr/lib/update-notifier/package-system-locked]
-Apr 29 11:03:41 machine-name gdm-password]: gkr-pam: unlocked login keyring
-Apr 29 11:17:01 machine-name CRON[17275]: pam_unix(cron:session): session opened for user root by (uid=0)
-Apr 29 11:17:01 machine-name CRON[17275]: pam_unix(cron:session): session closed for user root
-Apr 29 16:25:21 machine-name gdm-password]: gkr-pam: unlocked login keyring
-Apr 29 17:07:42 machine-name sshd[4043]: Accepted password for john from 111.222.111.222 port 35936 ssh2
-Apr 29 17:07:42 machine-name sshd[4043]: pam_unix(sshd:session): session opened for user john by (uid=0)
-Apr 29 17:07:42 machine-name systemd-logind[652]: New session 11 of user john.
-Apr 29 17:07:45 machine-name sshd[4142]: Received disconnect from 111.222.111.222 port 35936:11: disconnected by user
-Apr 29 17:07:45 machine-name sshd[4142]: Disconnected from user john 111.222.111.222 port 35936
-Apr 29 17:07:45 machine-name sshd[4043]: pam_unix(sshd:session): session closed for user john
-Apr 29 17:07:45 machine-name systemd-logind[652]: Removed session 11.
+# This example file contains snippets from various auth.log files
 
-Apr 29 17:07:52 machine-name sshd[4043]: Accepted password for john from 66.66.66.66 port 35936 ssh2
-Apr 29 17:07:52 machine-name sshd[4043]: pam_unix(sshd:session): session opened for user john by (uid=0)
-Apr 29 17:07:52 machine-name systemd-logind[652]: New session 11 of user john.
-Apr 29 17:07:55 machine-name sshd[4142]: Received disconnect from 66.66.66.66 port 35936:11: disconnected by user
-Apr 29 17:07:55 machine-name sshd[4142]: Disconnected from user john 66.66.66.66 port 35936
-Apr 29 17:07:55 machine-name sshd[4043]: pam_unix(sshd:session): session closed for user john
-Apr 29 17:07:55 machine-name systemd-logind[652]: Removed session 11.
+# Valid logins - passwords
+Feb  3 22:28:38 machine-name sshd[11802]: Accepted password for john from 2001:2222:2222:b10c::99 port 36152 ssh2
+Feb  3 22:28:38 machine-name sshd[11802]: pam_unix(sshd:session): session opened for user john by (uid=0)
+Feb  3 22:28:38 machine-name systemd-logind[326]: New session 6865 of user john.
+Feb  3 22:28:43 machine-name sshd[11817]: Received disconnect from 2001:2222:2222:b10c::99 port 36152:11: disconnected by user
+Feb  3 22:28:43 machine-name sshd[11817]: Disconnected from user john 2001:2222:2222:b10c::99 port 36152
+Feb  3 22:28:43 machine-name sshd[11802]: pam_unix(sshd:session): session closed for user john
+Feb  3 22:28:43 machine-name systemd-logind[326]: Session 6865 logged out. Waiting for processes to exit.
+Feb  3 22:28:43 machine-name systemd-logind[326]: Removed session 6865.
+Feb  3 22:28:45 machine-name sudo:   john : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/usr/bin/less auth.log
+Feb  3 22:28:45 machine-name sudo: pam_unix(sudo:session): session opened for user root by john(uid=0)
+Feb  3 22:28:50 machine-name sshd[11832]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=177.152.16.45  user=root
+Feb  3 22:28:51 machine-name sudo: pam_unix(sudo:session): session closed for user root
 
-Apr 29 17:08:00 machine-name sshd[4177]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1  user=ringo
-Apr 29 17:08:02 machine-name sshd[4177]: Failed password for ringo from 127.0.0.1 port 35940 ssh2
-Apr 29 17:08:06 machine-name sshd[4177]: message repeated 2 times: [ Failed password for ringo from 127.0.0.1 port 35940 ssh2]
-Apr 29 17:08:06 machine-name sshd[4177]: Connection closed by authenticating user ringo 127.0.0.1 port 35940 [preauth]
-Apr 29 17:08:06 machine-name sshd[4177]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1  user=ringo
+# Valid logins - public key
+Feb  3 22:27:55 machine-name sshd[11723]: Postponed publickey for john from 66.66.66.66 port 50234 ssh2 [preauth]
+Feb  3 22:27:55 machine-name sshd[11723]: Accepted publickey for john from 66.66.66.66 port 50234 ssh2: RSA SHA256:TE+wlE1GAzJMD2LnthSf9SMvirGAxt9EjKiNxJk0Mk8
+Feb  3 22:27:55 machine-name sshd[11723]: pam_unix(sshd:session): session opened for user john by (uid=0)
+Feb  3 22:27:55 machine-name systemd-logind[326]: New session 6863 of user john.
+Feb  3 22:27:56 machine-name systemd: pam_unix(systemd-user:session): session opened for user john by (uid=0)
+Feb  3 22:28:10 machine-name sudo:   john : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/usr/bin/less auth.log
+Feb  3 22:28:10 machine-name sudo: pam_unix(sudo:session): session opened for user root by john(uid=0)
+Feb  3 22:28:16 machine-name sudo: pam_unix(sudo:session): session closed for user root
+Feb  3 22:28:20 machine-name sudo:   john : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/usr/bin/less auth.log
+Feb  3 22:28:20 machine-name sudo: pam_unix(sudo:session): session opened for user root by john(uid=0)
+Feb  3 22:28:23 machine-name sudo: pam_unix(sudo:session): session closed for user root
 
-Apr 29 17:09:00 machine-name sshd[4177]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1  user=ringo
-Apr 29 17:09:02 machine-name sshd[4177]: Failed password for dtrump from 1.2.3.4 port 35940 ssh2
-Apr 29 17:09:06 machine-name sshd[4177]: message repeated 2 times: [ Failed password for dtrump from 1.2.3.4 port 35940 ssh2]
-Apr 29 17:09:06 machine-name sshd[4177]: Connection closed by authenticating user dtrump 1.2.3.4 port 35940 [preauth]
-Apr 29 17:09:06 machine-name sshd[4177]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=1.2.3.4  user=dtrump
+
+# Some unrelated logs
+Apr 10 10:18:20 machine-name useradd[13361]: failed adding user 'vboxadd', data deleted
+Apr 12 10:20:00 machine-name pkexec: pam_unix(polkit-1:session): session opened for user root by (uid=1000)
+Apr 12 10:20:00 machine-name pkexec[14417]: john: Executing command [USER=root] [TTY=unknown] [CWD=/home/john] [COMMAND=/usr/lib/update-notifier/package-system-locked]
+Apr 12 11:03:41 machine-name gdm-password]: gkr-pam: unlocked login keyring
+Apr 12 11:17:01 machine-name CRON[17275]: pam_unix(cron:session): session opened for user root by (uid=0)
+Apr 12 11:17:01 machine-name CRON[17275]: pam_unix(cron:session): session closed for user root
+Apr 12 16:25:21 machine-name gdm-password]: gkr-pam: unlocked login keyring
+May  3 00:05:01 machine-name CRON[18330]: pam_unix(cron:session): session opened for user dyndns by (uid=0)
+May  3 00:05:15 machine-name CRON[18330]: pam_unix(cron:session): session closed for user dyndns
+
+
+# Invalid logins - passwords
+Feb 11 00:02:47 machine-name sshd[18285]: Invalid user ringo from 127.0.0.1 port 39920
+Feb 11 00:02:47 machine-name sshd[18285]: pam_unix(sshd:auth): check pass; user unknown
+Feb 11 00:02:47 machine-name sshd[18285]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1
+Feb 11 00:02:49 machine-name sshd[18285]: Failed password for invalid user ringo from 127.0.0.1 port 39920 ssh2
+Feb 11 00:02:51 machine-name sshd[18285]: Received disconnect from 127.0.0.1 port 39920:11: Bye Bye [preauth]
+Feb 11 00:02:51 machine-name sshd[18285]: Disconnected from invalid user ringo 127.0.0.1 port 39920 [preauth]
+
+Mar 29 17:09:00 machine-name sshd[4177]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1  user=ringo
+Mar 29 17:09:02 machine-name sshd[4177]: Failed password for invalid user dtrump from 1.2.3.4 port 35940 ssh2
+Mar 29 17:09:06 machine-name sshd[4177]: message repeated 2 times: [ Failed password for invalid user dtrump from 1.2.3.4 port 35940 ssh2]
+Mar 29 17:09:06 machine-name sshd[4177]: Connection closed by authenticating user dtrump 1.2.3.4 port 35940 [preauth]
+Mar 29 17:09:06 machine-name sshd[4177]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=1.2.3.4  user=dtrump

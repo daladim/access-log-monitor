@@ -15,7 +15,7 @@ TEST_CASE( "Parsing auth.log files" ){
     Authentication a0 = auths[0];
     CHECK( a0.user.compare("john") == 0 );
     CHECK( a0.success == true );
-    CHECK( a0.origin == Address("111.222.111.222") );
+    CHECK( a0.origin == Address("2001:2222:2222:b10c::99") );
 
     Authentication a1 = auths[1];
     CHECK( a1.user.compare("john") == 0 );

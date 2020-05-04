@@ -23,7 +23,7 @@ TEST_CASE( "Main logic for auth,log" ){
         switch(i){
             case 0:
                 CHECK( line->user.compare("john") == 0 );
-                CHECK( line->origin == Address("111.222.111.222") );
+                CHECK( line->origin == Address("2001:2222:2222:b10c::99") );
                 // This auth matches a specific rule
                 CHECK( line->validity == Authentication::Validity::OK );
                 CHECK( line->description.compare("regular access") == 0 );

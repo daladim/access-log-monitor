@@ -20,6 +20,7 @@ addresses:
     - 200.201.202.0/16
     My own VPS:
     - 111.222.111.222
+    - 2001:2222:2222:b10c::99
     My addresses:
     - lan
     - My home provider

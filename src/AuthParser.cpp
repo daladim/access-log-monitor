@@ -21,12 +21,17 @@ void Auth::parseLog(){
 }
 
 optional<LogSupervisor::Authentication> Auth::parseLine(const std::string& line){
-    regex re_success(R"raw((.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted password for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
-    //                      TS     host   proc   PID                             user                IP
-    regex re_failed( R"raw((.*)\s+[^\s]+\s+.*\[[0-9]+\]: Failed password for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+    //                          TS     host   proc   PID                                user              IP
+    regex re_success_pk(R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted publickey for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+    regex re_success_pw(R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted password for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+
+    //                          TS     host   proc   PID                                          user              IP
+    regex re_failed(    R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Failed password for invalid user\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
 
     smatch matches;
-    if(regex_search(line, matches, re_success)){
+    if(regex_search(line, matches, re_success_pk)){
+        return authFromMatches(matches, true);
+    }else if(regex_search(line, matches, re_success_pw)){
         return authFromMatches(matches, true);
     }else if(regex_search(line, matches, re_failed)){
         return authFromMatches(matches, false);

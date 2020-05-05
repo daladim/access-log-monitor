@@ -24,6 +24,7 @@ MAIN_SRCS := \
 	src/ApacheParser.cpp \
 	src/Supervisor.cpp \
 	src/TextSerializer.cpp \
+	src/HTMLSerializer.cpp \
 	src/main.cpp
 
 TEST_SRCS := \

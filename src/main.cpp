@@ -8,6 +8,7 @@ using namespace std;
 #include "database/DatabaseObjects.hpp"
 #include "Supervisor.hpp"
 #include "TextSerializer.hpp"
+#include "HTMLSerializer.hpp"
 
 using namespace LogSupervisor;
 
@@ -20,8 +21,10 @@ int main(){
     Supervisor sup(conf, logParser);
     sup.run();
 
-    Serializer::Text txtSerializer(sup.database());
-    cerr << txtSerializer << endl;
+    Serializer::Interface* serializer1 = new Serializer::Text(sup.database());
+    Serializer::Interface* serializer2 = new Serializer::HTML(sup.database());
+    cout << *serializer1 << endl;
+    cout << *serializer2 << endl;
 
     return 0;
 }

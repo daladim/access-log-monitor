@@ -21,6 +21,7 @@ TEST_SRCS := \
 	src/utils/sqlite/SQLiteStatement.cpp \
 	src/utils/sqlite/SQLiteStatementIterator.cpp \
 	src/database/Database.cpp \
+	src/database/DatabaseObjects.cpp \
 	src/database/DatabaseRequest.cpp \
 	src/database/DatabaseRequestIterator.cpp \
 	src/Config.cpp \

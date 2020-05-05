@@ -78,21 +78,21 @@ TEST_CASE( "Database" ){
         shared_ptr<Authentication> row1 = d.fetch(1);
         CHECK( row1->user.compare("Joe") == 0 );
         CHECK( row1->success == true );
-        CHECK( row1->validity == Authentication::Validity::Undefined );
+        CHECK( row1->validity == Authentication::Validity::Undefined() );
     }
 
     SECTION("Fetching another row"){
         shared_ptr<Authentication> row2 = d.fetch(2);
         CHECK( row2->user.compare("Jack") == 0 );
         CHECK( row2->success == false );
-        CHECK( row2->validity == Authentication::Validity::Undefined );
+        CHECK( row2->validity == Authentication::Validity::Undefined() );
     }
 
     SECTION("Updating a field"){
-        d.updateValidity(2, Authentication::Validity::OK );
+        d.updateValidity(2, Authentication::Validity::OK() );
         shared_ptr<Authentication> row2 = d.fetch(2);
         CHECK( row2->user.compare("Jack") == 0 );
-        CHECK( row2->validity == Authentication::Validity::OK );
+        CHECK( row2->validity == Authentication::Validity::OK() );
 
     }
 

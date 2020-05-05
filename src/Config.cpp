@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 using namespace std;
 
 #include "Config.hpp"
@@ -8,7 +7,9 @@ using namespace std;
 
 namespace LogSupervisor{
 
-Config::Config(const string& configFile){
+Config::Config(const string& configFile) :
+    default_validity(Authentication::Validity::Undefined())
+{
     ifstream file(configFile);
     YAML::Node config = YAML::LoadFile(configFile);
 
@@ -82,20 +83,12 @@ namespace YAML{
 
         static bool decode(const Node& node, Authentication::Validity& rhs){
             string sVal = node.as<string>();
-            std::transform(sVal.begin(), sVal.end(), sVal.begin(), ::tolower);
-            if(sVal.compare("ok") == 0){
-                rhs = Authentication::Validity::OK;
+            try{
+                rhs = Authentication::Validity(sVal);
                 return true;
+            }catch(...){
+                return false;
             }
-            if(sVal.compare("warning") == 0){
-                rhs = Authentication::Validity::Warning;
-                return true;
-            }
-            if(sVal.compare("critical") == 0){
-                rhs = Authentication::Validity::Critical;
-                return true;
-            }
-
             return false;
         }
     };

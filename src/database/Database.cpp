@@ -11,7 +11,7 @@ Database::Database() :
     // SQLite has no DATETIME format. Let's store everything as string
     db.exec("CREATE TABLE 'auths'('id' INTEGER PRIMARY KEY AUTOINCREMENT,                          "
             "                     'user' TEXT, 'origin' TEXT, 'timepoint' TEXT, 'success' INTEGER, "
-            "                     'validity' INTEGER, 'description' TEXT );");
+            "                     'validity' TEXT, 'description' TEXT );");
 }
 
 void Database::insert(const Authentication& auth){
@@ -21,7 +21,7 @@ void Database::insert(const Authentication& auth){
     ps->bindText(2, *(auth.origin.to_string()));
     ps->bindText(3, auth.timestamp.to_string());
     ps->bindInt(4, auth.success);
-    ps->bindInt(5, auth.validity);
+    ps->bindText(5, auth.validity.to_string());
     ps->bindText(6, auth.description);
     int rc = ps->step();
 }
@@ -34,7 +34,7 @@ Request Database::all() const{
 
 void Database::updateValidity(int id, Authentication::Validity v){
     shared_ptr<SQLite::Statement> statement = db.prepare("UPDATE 'auths' SET validity = ? WHERE id = ?");
-    statement->bindInt(1, v);
+    statement->bindText(1, v.to_string());
     statement->bindInt(2, id);
     statement->step();
 }

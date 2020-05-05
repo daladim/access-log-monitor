@@ -17,6 +17,7 @@ public:
     Apache(const std::string& filePath);
     void parseLog() override;
     std::vector<LogSupervisor::Authentication> all() override;
+    virtual ~Apache() {}
 
 private:
     std::ifstream logFile;

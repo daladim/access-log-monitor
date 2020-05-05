@@ -10,7 +10,7 @@ using namespace std;
 using namespace LogSupervisor;
 
 // This is mainly an integration test, it does not really classify as a unit test
-TEST_CASE( "Main logic for auth,log" ){
+TEST_CASE( "Main logic for auth.log" ){
     Config conf("doc/config-example.yml");
     LogParser::Interface* logParser = new LogParser::Auth("tests/data/auth.log");
     Supervisor sup(conf, logParser);

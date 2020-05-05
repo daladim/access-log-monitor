@@ -17,6 +17,8 @@ public:
     Auth(const std::string& filePath);
     void parseLog() override;
     std::vector<LogSupervisor::Authentication> all() override;
+    virtual ~Auth() {}
+
 
 private:
     std::ifstream logFile;

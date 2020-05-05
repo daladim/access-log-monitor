@@ -32,6 +32,14 @@ Request Database::all() const{
     return Request(statement);
 }
 
+Request Database::successes() const{
+    return Request(db.prepare("SELECT * from auths WHERE success=1 ORDER BY user, validity;"));
+}
+
+Request Database::failures() const{
+    return Request(db.prepare("SELECT * from auths WHERE success=0 ORDER BY user, validity;"));
+}
+
 void Database::updateValidity(int id, Authentication::Validity v){
     shared_ptr<SQLite::Statement> statement = db.prepare("UPDATE 'auths' SET validity = ? WHERE id = ?");
     statement->bindText(1, v.to_string());

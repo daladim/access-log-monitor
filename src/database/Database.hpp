@@ -20,8 +20,14 @@ public:
     //! Update the validity field of a record
     void updateValidity(int id, Authentication::Validity v);
 
-    //! Retrieve all the records: begin iterator
+    //! Retrieve all the records in the order they have been inserted in
     Request all() const;
+
+    //! Retrieve only the successful (=the user succeeded in logging in) records, sorted by user then validity
+    Request successes() const;
+
+    //! Retrieve only the successful (=the user succeeded in logging in) records, sorted by user then validity
+    Request failures() const;
 
     //! Retrieve a single record
     std::shared_ptr<Authentication> fetch(int id);

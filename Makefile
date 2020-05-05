@@ -25,6 +25,7 @@ TEST_SRCS := \
 	src/database/DatabaseRequestIterator.cpp \
 	src/Config.cpp \
 	src/AuthParser.cpp \
+	src/ApacheParser.cpp \
 	src/Supervisor.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \
@@ -34,6 +35,7 @@ TEST_SRCS := \
 	tests/TestDatabase.cpp \
 	tests/TestConfigParsing.cpp \
 	tests/TestAuthParser.cpp \
+	tests/TestApacheParser.cpp \
 	tests/TestSupervisor.cpp
 
 MAIN_STATIC_LIBS := libs/yaml-cpp/build/libyaml-cpp.a

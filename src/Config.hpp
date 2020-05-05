@@ -34,6 +34,7 @@ private:
     std::vector<Rule> m_rules;
     Authentication::Validity default_validity;
 
+    void parseConfig(const std::string& configFile);
     void populateRules(const YAML::Node& yamlRules);
 };
 

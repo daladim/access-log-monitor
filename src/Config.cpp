@@ -10,6 +10,16 @@ namespace LogSupervisor{
 Config::Config(const string& configFile) :
     default_validity(Authentication::Validity::Undefined())
 {
+    try{
+        parseConfig(configFile);
+    }catch(const YAML::Exception& e){
+        cerr << "ERROR: unable to parse the file at " << configFile << endl;
+        cerr << e.what() << endl;
+        throw e;
+    }
+}
+
+void Config::parseConfig(const string& configFile){
     ifstream file(configFile);
     YAML::Node config = YAML::LoadFile(configFile);
 

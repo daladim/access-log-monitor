@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include <iostream>
+#include <yaml-cpp/yaml.h> // in the libs/ folder
 using namespace std;
 
 #include "../src/Config.hpp"
@@ -31,4 +32,11 @@ TEST_CASE( "Config file parsing" ){
         CHECK( r3.descr.compare("I have a specific interest on these addresses") == 0 );
     }
 
+}
+
+TEST_CASE( "Invalid config file" ){
+    // The Doxyfile is not a YAML file
+    string wrongConfigFile("doc/Doxyfile");
+    cerr << "Note: this test checks for an expected exception. It will display an error about " << wrongConfigFile << ", that you can (and should) safely ignore, as long as the test framework reports that all tests are passing." << endl;
+    CHECK_THROWS_AS( Config(wrongConfigFile), YAML::Exception );
 }

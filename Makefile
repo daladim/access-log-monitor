@@ -9,6 +9,21 @@ SRC_DIRS ?= ./src
 MAIN_SRCS := \
 	src/utils/AddressRange.cpp \
 	src/utils/Address.cpp \
+	src/utils/Timestamp.cpp \
+	src/utils/ParamList.cpp \
+	src/utils/sqlite/SQLiteDB.cpp \
+	src/utils/sqlite/SQLiteStatement.cpp \
+	src/utils/sqlite/SQLiteStatementIterator.cpp \
+	src/utils/SerializerInterface.cpp \
+	src/database/Database.cpp \
+	src/database/DatabaseObjects.cpp \
+	src/database/DatabaseRequest.cpp \
+	src/database/DatabaseRequestIterator.cpp \
+	src/Config.cpp \
+	src/AuthParser.cpp \
+	src/ApacheParser.cpp \
+	src/Supervisor.cpp \
+	src/TextSerializer.cpp \
 	src/main.cpp
 
 TEST_SRCS := \

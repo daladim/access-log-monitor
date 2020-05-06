@@ -15,6 +15,7 @@ namespace LogSupervisor::LogParser{
 class Auth : public Interface{
 public:
     Auth(const std::string& filePath);
+    std::string humanReadableLogType() const override;
     void parseLog() override;
     std::vector<LogSupervisor::Authentication> all() override;
     virtual ~Auth() {}

@@ -11,6 +11,9 @@ namespace LogSupervisor::LogParser{
 //! The interface every log parser should comply to
 class Interface{
 public:
+    //! Human-readable string that describes the type of logs this type of parser operates on
+    virtual std::string humanReadableLogType() const = 0;
+
     //! Parse a log, the path of which was given in the constructor
     virtual void parseLog() = 0;
 

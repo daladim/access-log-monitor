@@ -15,6 +15,7 @@ namespace LogSupervisor::LogParser{
 class Apache : public Interface{
 public:
     Apache(const std::string& filePath);
+    std::string humanReadableLogType() const override;
     void parseLog() override;
     std::vector<LogSupervisor::Authentication> all() override;
     virtual ~Apache() {}

@@ -9,6 +9,11 @@ Auth::Auth(const string& filePath) :
     logFile(filePath)
 {}
 
+std::string Auth::humanReadableLogType() const{
+    return "SSH log checks";
+}
+
+
 void Auth::parseLog(){
     string currentLine;
     while(std::getline(logFile, currentLine)){

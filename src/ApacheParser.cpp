@@ -9,6 +9,11 @@ Apache::Apache(const string& filePath) :
     logFile(filePath)
 {}
 
+std::string Apache::humanReadableLogType() const{
+    return "Apache log files";
+}
+
+
 void Apache::parseLog(){
     string currentLine;
     while(std::getline(logFile, currentLine)){

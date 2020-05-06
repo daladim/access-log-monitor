@@ -16,7 +16,8 @@ public:
     //! This will be called when calling ostream::operator<<(Interface&)
     virtual std::ostream& serialize(std::ostream& lhs) = 0;
 
-
+    //! Retrieve the serialized content as a string. This calls serizalize() internally.
+    std::string to_string();
 
 private:
     friend std::ostream& operator<<(std::ostream& lhs, Interface& serializer);

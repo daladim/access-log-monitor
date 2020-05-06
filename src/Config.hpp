@@ -25,14 +25,17 @@ public:
     const std::vector<Rule>& rules() const;
 
     //! Retrieve the default status as defined in the config file
-    const Authentication::Validity default_status() const{ return default_validity; };
+    Authentication::Validity default_status() const{ return default_validity; }
 
+    //! The e-mail address as defined in the config file
+    const std::string& mailAddress() const{ return m_mailAddress; }
 
 private:
     AliasStore<AddressRange> addrAliases;
     AliasStore<User> userAliases;
     std::vector<Rule> m_rules;
     Authentication::Validity default_validity;
+    std::string m_mailAddress;
 
     void parseConfig(const std::string& configFile);
     void populateRules(const YAML::Node& yamlRules);

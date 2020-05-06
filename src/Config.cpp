@@ -24,6 +24,7 @@ void Config::parseConfig(const string& configFile){
     YAML::Node config = YAML::LoadFile(configFile);
 
     default_validity = config["default_status"].as<Authentication::Validity>();
+    m_mailAddress = config["mail"].as<string>();
 
     addrAliases = config["addresses"].as<AliasStore<AddressRange>>();
     userAliases = config["users"].as<AliasStore<User>>();

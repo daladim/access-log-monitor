@@ -14,7 +14,7 @@ class Database{
 public:
     Database();
 
-    //! Insert a record into the DB
+    //! Insert a record into the DB (or increment its counter in case it already exists)
     void insert(const Authentication& auth);
 
     //! Update the validity field of a record

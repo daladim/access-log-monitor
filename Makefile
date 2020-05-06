@@ -83,6 +83,8 @@ TEST_OBJS += $(TEST_STATIC_LIBS)
 CPPFLAGS ?= -MMD -MP
 # Other flags
 CPPFLAGS += -std=c++17
+CPPFLAGS += -DGIT_VERSION_STRING='"$(shell git describe --tags)"'
+
 
 # libs
 CPPFLAGS += -Ilibs/yaml-cpp/include

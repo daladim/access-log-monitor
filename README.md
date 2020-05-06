@@ -2,7 +2,8 @@
 A tool that checks for unexpected logins (IP, username or time based) from system logs
 
 # How to use
-Populate a configuration file with your rules: add the IPs, usernames and timespans that look normal or suspicious. See `doc/config-example.yml` for an example.
+Populate a configuration file with your rules: add the IPs, usernames and timespans that look normal or suspicious. See `doc/config-example.yml` for an example. \
+Note that timespans are ignored for the moment.
 
 Run `./access-log-supervisor --config /your/config/file --input /var/log/your-log --type log-type`
 

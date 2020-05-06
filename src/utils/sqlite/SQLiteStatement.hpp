@@ -24,8 +24,8 @@ public:
     //! Bind a user-controlled text input to the statement. index starts at 1, not 0
     void bindText(int index, const std::string& value);
 
-    //! Run one "step" (e.g. fetch one row) of a statement.
-    //! If the return code is SQLITE_ROW, extra rows can be fetched by new calls to this method
+    //! Run one "step" (e.g. fetch one row) of a statement.<br>
+    //! If the return code is SQLITE_ROW, extra rows can be fetched by new calls to this method<br>
     //! Note: for better convenience, you may want to use a Statement::Iterator instead
     int step();
 

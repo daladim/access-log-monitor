@@ -78,6 +78,7 @@ TEST_CASE( "Database" ){
         shared_ptr<Authentication> row1 = d.fetch(1);
         CHECK( row1->user.compare("Joe") == 0 );
         CHECK( row1->success == true );
+        CHECK( row1->count == 1 );
         CHECK( row1->validity == Authentication::Validity::Undefined() );
     }
 
@@ -93,9 +94,13 @@ TEST_CASE( "Database" ){
         shared_ptr<Authentication> row2 = d.fetch(2);
         CHECK( row2->user.compare("Jack") == 0 );
         CHECK( row2->validity == Authentication::Validity::OK() );
-
     }
 
+    SECTION("Duplicate rows"){
+        d.insert(Authentication("Averell", "4.4.4.4", "2030-01-01 11:22:33", false));
+        shared_ptr<Authentication> row2 = d.fetch(4);
+        CHECK( row2->count == 2 );
+    }
 
 }
 

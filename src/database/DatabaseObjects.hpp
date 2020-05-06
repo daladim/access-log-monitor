@@ -43,9 +43,11 @@ public:
     #define DEFAULT_DESCR "<no description available>"
 
     Authentication(const User& user, const Address& origin, const Timestamp& ts, bool success,
+                   unsigned int count = 0,
                    Validity val = Validity::Undefined(), const std::string& descr = DEFAULT_DESCR, std::optional<int> id = {}) :
         id(id),
         user(user), origin(origin), timestamp(ts), success(success),
+        count(count),
         validity(val),
         description(descr)
     {}
@@ -55,6 +57,7 @@ public:
     const Address origin;       //!< The remote IP this connection comes from
     const Timestamp timestamp;  //!< When this authentication happened
     const bool success;         //!< whether the authentication attempt succeeded (it may have failed, e.g. if a wrong password was presented)
+    unsigned int count;         //!< How many times this couple (user,address,validity...) has been detected
     std::string description;    //!< A place to store a user-defined description
     Validity validity;          //!< A place to store what we think about this authentication
 };

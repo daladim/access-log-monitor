@@ -15,10 +15,15 @@ std::shared_ptr<LogSupervisor::Authentication> Request::Iterator::currentAuth(){
     Address origin = (const char*) sqlsi->textValue(2);
     Timestamp ts =   (const char*) sqlsi->textValue(3);
     bool success =                 sqlsi->intValue(4);
+    int icount =                   sqlsi->intValue(5);
+    if(icount < 0){
+        throw runtime_error("Invalid cast from negative number");
+    }
+    unsigned int count = (unsigned int)icount;
 
-    Authentication::Validity val = Authentication::Validity((const char*)sqlsi->textValue(5));
-    string descr = (const char*) sqlsi->textValue(6);
-    return make_shared<LogSupervisor::Authentication>(user, origin, ts, success, val, descr, id);
+    Authentication::Validity val = Authentication::Validity((const char*)sqlsi->textValue(6));
+    string descr = (const char*) sqlsi->textValue(7);
+    return make_shared<LogSupervisor::Authentication>(user, origin, ts, success, count, val, descr, id);
 }
 
 std::shared_ptr<LogSupervisor::Authentication> Request::Iterator::operator++(){

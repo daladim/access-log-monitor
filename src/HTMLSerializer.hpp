@@ -5,6 +5,7 @@
 
 #include "utils/SerializerInterface.hpp"
 #include "database/Database.hpp"
+#include "database/DatabaseObjects.hpp"
 
 namespace LogSupervisor::Serializer{
 using Database = LogSupervisor::Database::Database;
@@ -19,7 +20,18 @@ public:
 private:
     const Database& db;
 
-    void addHeader(ostream& lhs) const;
+    // various HTML styles
+    static const string sUserBlock;
+    static const string sUserName;
+    static const string sTable;
+    static const string sCounter;
+    static const string sRowStyleOK[];
+    static const string sRowStyleWarning[];
+    static const string sRowStyleCritical[];
+
+    ostream& userHeader(ostream& lhs, const User& user, bool login_succeeded);
+    ostream& authRow(ostream& lhs, const shared_ptr<Authentication> auth, unsigned int* iRow, User* curUser);
+    ostream& userFooter(ostream& lhs);
 };
 
 } // namespace

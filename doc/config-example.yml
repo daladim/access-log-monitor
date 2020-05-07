@@ -1,7 +1,8 @@
 # This is a config file for access-log-supervisor
 # This file defines a set of rules that tell whether an access is allowed, forbidden or suspicious
 
-# Output config
+# If you define a mail address here, any output will be mailed to it
+# This requires 'sendmail' is installed and properly configured on this machine
 mail: hostmaster@my.host.tld
 
 

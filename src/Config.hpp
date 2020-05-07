@@ -28,14 +28,14 @@ public:
     Authentication::Validity default_status() const{ return default_validity; }
 
     //! The e-mail address as defined in the config file
-    const std::string& mailAddress() const{ return m_mailAddress; }
+    const std::optional<const std::string>& mailAddress() const{ return m_mailAddress; }
 
 private:
     AliasStore<AddressRange> addrAliases;
     AliasStore<User> userAliases;
     std::vector<Rule> m_rules;
     Authentication::Validity default_validity;
-    std::string m_mailAddress;
+    std::optional<const std::string> m_mailAddress;
 
     void parseConfig(const std::string& configFile);
     void populateRules(const YAML::Node& yamlRules);

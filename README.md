@@ -10,11 +10,13 @@ Run `./access-log-supervisor --config /your/config/file --input /var/log/your-lo
 See `./access-log-supervisor --help` for the available commands, options, and their default values.
 
 ## Input formats
-Several input formats are available. See the list with `./access-log-supervisor --input-formats`.
+Several input formats are available. \
+See the `src/parsers/` folder for a list of available parsers.
 
 ## Output
-By default, the standard output is used.
-Other output formats are available (such as e-mail). See the list with `./access-log-supervisor --output-formats`.
+Various output formats are available (plain text, HTML...). \
+See the `src/serializers/` folder for a list of available serializers. \
+The output can be mailed in case the config files requires so.
 
 # How to build
 This project requires these dependancies:

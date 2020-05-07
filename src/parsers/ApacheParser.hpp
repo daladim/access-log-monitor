@@ -1,5 +1,5 @@
-#ifndef _AUTH_PARSER_HPP_
-#define _AUTH_PARSER_HPP_
+#ifndef _APACHE_PARSER_HPP_
+#define _APACHE_PARSER_HPP_
 
 #include <iostream>
 #include <vector>
@@ -7,19 +7,18 @@
 #include <optional>
 #include <regex>
 
-#include "utils/LogParserInterface.hpp"
+#include "LogParserInterface.hpp"
 
 namespace LogSupervisor::LogParser{
 
-//! The class parses auth.log files
-class Auth : public Interface{
+//! The class parses Apache "combined" log files
+class Apache : public Interface{
 public:
-    Auth(const std::string& filePath);
+    Apache(const std::string& filePath);
     std::string humanReadableLogType() const override;
     void parseLog() override;
     std::vector<LogSupervisor::Authentication> all() override;
-    virtual ~Auth() {}
-
+    virtual ~Apache() {}
 
 private:
     std::ifstream logFile;
@@ -32,4 +31,4 @@ private:
 
 } // namespace
 
-#endif // _AUTH_PARSER_HPP_
+#endif // _APACHE_PARSER_HPP_

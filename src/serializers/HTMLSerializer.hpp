@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-#include "utils/SerializerInterface.hpp"
-#include "database/Database.hpp"
-#include "database/DatabaseObjects.hpp"
+#include "SerializerInterface.hpp"
+#include "../database/Database.hpp"
+#include "../database/DatabaseObjects.hpp"
 
 namespace LogSupervisor::Serializer{
 using Database = LogSupervisor::Database::Database;

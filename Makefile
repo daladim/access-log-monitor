@@ -14,17 +14,17 @@ MAIN_SRCS := \
 	src/utils/sqlite/SQLiteDB.cpp \
 	src/utils/sqlite/SQLiteStatement.cpp \
 	src/utils/sqlite/SQLiteStatementIterator.cpp \
-	src/utils/SerializerInterface.cpp \
 	src/database/Database.cpp \
 	src/database/DatabaseObjects.cpp \
 	src/database/DatabaseRequest.cpp \
 	src/database/DatabaseRequestIterator.cpp \
+	src/parsers/AuthParser.cpp \
+	src/parsers/ApacheParser.cpp \
+	src/serializers/SerializerInterface.cpp \
+	src/serializers/TextSerializer.cpp \
+	src/serializers/HTMLSerializer.cpp \
 	src/Config.cpp \
-	src/AuthParser.cpp \
-	src/ApacheParser.cpp \
 	src/Supervisor.cpp \
-	src/TextSerializer.cpp \
-	src/HTMLSerializer.cpp \
 	src/main.cpp
 
 TEST_SRCS := \
@@ -40,9 +40,9 @@ TEST_SRCS := \
 	src/database/DatabaseObjects.cpp \
 	src/database/DatabaseRequest.cpp \
 	src/database/DatabaseRequestIterator.cpp \
+	src/parsers/AuthParser.cpp \
+	src/parsers/ApacheParser.cpp \
 	src/Config.cpp \
-	src/AuthParser.cpp \
-	src/ApacheParser.cpp \
 	src/Supervisor.cpp \
 	tests/TestAddresses.cpp \
 	tests/TestAliasStore.cpp \

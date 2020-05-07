@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-#include "../src/AuthParser.hpp"
+#include "../src/parsers/AuthParser.hpp"
 using namespace LogSupervisor;
 
 TEST_CASE( "Parsing auth.log files" ){

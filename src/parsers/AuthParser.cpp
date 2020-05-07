@@ -13,6 +13,10 @@ std::string Auth::humanReadableLogType() const{
     return "SSH log checks";
 }
 
+std::string Auth::shortName(){
+    return "auth";
+}
+
 
 void Auth::parseLog(){
     string currentLine;

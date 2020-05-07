@@ -5,7 +5,8 @@ A tool that checks for unexpected logins (IP, username or time based) from syste
 Populate a configuration file with your rules: add the IPs, usernames and timespans that look normal or suspicious. See `doc/config-example.yml` for an example. \
 Note that timespans are ignored for the moment.
 
-Run `./access-log-supervisor --config /your/config/file --input /var/log/your-log --type log-type`
+Run `./access-log-supervisor --config /your/config/file --type log-type /var/log/your-log`\
+`type` is the `shortName` of the parser to use (e.g. `apache`, `auth`...)
 
 See `./access-log-supervisor --help` for the available commands, options, and their default values.
 

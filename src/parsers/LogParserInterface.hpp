@@ -13,6 +13,8 @@ class Interface{
 public:
     //! Human-readable string that describes the type of logs this type of parser operates on
     virtual std::string humanReadableLogType() const = 0;
+    //! A short name that the user can type (e.g. as a command-line argument)
+    static std::string shortName() = delete;
 
     //! Parse a log, the path of which was given in the constructor
     virtual void parseLog() = 0;

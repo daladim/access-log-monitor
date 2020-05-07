@@ -13,6 +13,10 @@ std::string Apache::humanReadableLogType() const{
     return "Apache log files";
 }
 
+std::string Apache::shortName(){
+    return "apache";
+}
+
 
 void Apache::parseLog(){
     string currentLine;

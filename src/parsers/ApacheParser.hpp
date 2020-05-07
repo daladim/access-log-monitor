@@ -16,6 +16,7 @@ class Apache : public Interface{
 public:
     Apache(const std::string& filePath);
     std::string humanReadableLogType() const override;
+    static std::string shortName();
     void parseLog() override;
     std::vector<LogSupervisor::Authentication> all() override;
     virtual ~Apache() {}

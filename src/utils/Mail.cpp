@@ -7,10 +7,7 @@ using namespace std;
 #include <sys/types.h>
 #include "Pipeline.h"
 #include "Timestamp.hpp"
-
-#ifndef GIT_VERSION_STRING
-#define GIT_VERSION_STRING "<unknown>"
-#endif
+#include "constants.hpp"
 
 namespace LogSupervisor{
 

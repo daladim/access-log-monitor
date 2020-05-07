@@ -3,7 +3,7 @@
 using namespace std;
 
 #include "../src/Supervisor.hpp"
-#include "../src/AuthParser.hpp"
+#include "../src/parsers/AuthParser.hpp"
 #include "../src/database/Database.hpp"
 #include "../src/database/DatabaseObjects.hpp"
 

@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-#include "../src/ApacheParser.hpp"
+#include "../src/parsers/ApacheParser.hpp"
 using namespace LogSupervisor;
 
 TEST_CASE( "Parsing SSL combined log files" ){

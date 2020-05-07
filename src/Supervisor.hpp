@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "utils/LogParserInterface.hpp"
+#include "parsers/LogParserInterface.hpp"
 #include "database/Database.hpp"
 #include "database/DatabaseObjects.hpp"
 #include "Config.hpp"

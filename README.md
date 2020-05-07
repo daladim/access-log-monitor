@@ -23,7 +23,10 @@ This project requires these dependancies:
 Do not forget to also fetch the submodules (`git submodule init; git submodule update`) so that you can build the required static dependancies.
 
 Run `make` to build to app. \
-Run `make test` to build the test suite.
+Run `make test` to build the test suite, which can be run with `build/tests`.
 
 # Developer documentation
 A Doxygen documentation is available. Run `make doc` to generate it. Open it via `doc/developer-documentation.html`
+
+# Notes
+This tool can look over-tested (if ever a concept of "too much testing" existed), since this began as an "exercise project" I made after following a course on software testing.

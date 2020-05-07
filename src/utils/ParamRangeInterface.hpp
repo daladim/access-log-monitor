@@ -3,6 +3,7 @@
 
 namespace LogSupervisor{
 
+//! This is the interface for parameters that are ranges (e.g. range of IP addresses, time intervals...)
 template<typename SingleParam>
 class ParamRangeInterface{
 public:

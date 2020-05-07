@@ -11,9 +11,11 @@ MAIN_SRCS := \
 	src/utils/Address.cpp \
 	src/utils/Timestamp.cpp \
 	src/utils/ParamList.cpp \
+	src/utils/Mail.cpp \
 	src/utils/sqlite/SQLiteDB.cpp \
 	src/utils/sqlite/SQLiteStatement.cpp \
 	src/utils/sqlite/SQLiteStatementIterator.cpp \
+	src/utils/Pipeline.cpp \
 	src/database/Database.cpp \
 	src/database/DatabaseObjects.cpp \
 	src/database/DatabaseRequest.cpp \

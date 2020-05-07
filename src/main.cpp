@@ -5,6 +5,7 @@ using namespace std;
 
 #include "parsers/LogParserInterface.hpp"
 #include "parsers/AuthParser.hpp"
+#include "parsers/ApacheParser.hpp"
 #include "utils/Mail.hpp"
 #include "Supervisor.hpp"
 #include "Config.hpp"
@@ -17,10 +18,32 @@ using namespace std;
 using namespace LogSupervisor;
 
 int run(const string& confPath, const string& type, const string& logPath){
-    cerr << "conf " << confPath << endl;
-    cerr << "type " << type << endl;
-    cerr << "log " << logPath << endl;
-    return 1;
+    Config conf(confPath);
+    LogParser::Interface* parser;
+    if(type.compare(LogParser::Apache::shortName()) == 0){
+        parser = new LogParser::Apache(logPath);
+    }else if(type.compare(LogParser::Auth::shortName()) == 0){
+        parser = new LogParser::Auth(logPath);
+    }else{
+        throw runtime_error(string("Invalid type value: ") + type);
+    }
+
+    Supervisor sup(conf, parser);
+    sup.run();
+
+    //Serializer::Interface* serializer = new Serializer::Text(sup.database());
+    Serializer::Interface* serializer = new Serializer::HTML(sup.database());
+
+    // Send a mail if needed
+    if(conf.mailAddress()){
+        string title = string("Supervision, ") + parser->humanReadableLogType();
+        Mail mail(*(conf.mailAddress()), title, serializer->to_string(), logPath);
+        mail.send();
+    }
+
+    delete serializer;
+    delete parser;
+    return 0;
 }
 
 
@@ -53,5 +76,12 @@ int main(int argc, char* argv[]){
         cerr << "Unable to parse arguments: " << e.what() << endl;
         return 2;
     }
-    return run(conf, type, input);
+
+    try{
+        run(conf, type, input);
+    }catch(const exception& e){
+        cerr << "Error: " << e.what() << endl;
+        return 10;
+    }
+    return 0;
 }

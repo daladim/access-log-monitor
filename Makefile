@@ -87,7 +87,7 @@ CPPFLAGS += -DGIT_VERSION_STRING='"$(shell git describe --tags)"'
 
 
 # libs
-CPPFLAGS += -Ilibs/yaml-cpp/include
+CPPFLAGS += -Ilibs/yaml-cpp/include -Ilibs/
 
 # Final executable
 $(BUILD_DIR)/$(MAIN_EXEC): $(MAIN_OBJS)

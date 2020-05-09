@@ -33,10 +33,10 @@ bool Mail::send() const{
     msg << content;
 
     // Call a binary to send this message
-    char* const args[] = {mail_binary, "-t", NULL};
-    char* const env[] = {"", NULL};
+    const char* const args[] = {mail_binary, "-t", NULL};
+    const char* const env[] = {"", NULL};
     string copy = msg.str();
-    execWithStdin(mail_binary, args, env, copy.c_str());
+    return execWithStdin(mail_binary, args, env, copy.c_str());
 }
 
 string Mail::getUserName() const{

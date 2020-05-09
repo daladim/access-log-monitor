@@ -12,7 +12,7 @@ public:
     //! Constructor. The arguments will be passed as-is to the 'sendmail' program
     Mail(const std::string& recipient, const std::string& subject, const std::string& content, const std::string& logPath);
 
-    //! Send a mail, an return true on succedd
+    //! Send a mail, an return true on success
     bool send() const;
 
 private:

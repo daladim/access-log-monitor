@@ -19,6 +19,7 @@ using namespace LogSupervisor;
 
 int run(const string& confPath, const string& type, const string& logPath){
     Config conf(confPath);
+
     LogParser::Interface* parser;
     if(type.compare(LogParser::Apache::shortName()) == 0){
         parser = new LogParser::Apache(logPath);
@@ -31,17 +32,23 @@ int run(const string& confPath, const string& type, const string& logPath){
     Supervisor sup(conf, parser);
     sup.run();
 
-    //Serializer::Interface* serializer = new Serializer::Text(sup.database());
-    Serializer::Interface* serializer = new Serializer::HTML(sup.database());
+    Serializer::HTML serializer(sup.database());
 
     // Send a mail if needed
     if(conf.mailAddress()){
         string title = string("Supervision, ") + parser->humanReadableLogType();
-        Mail mail(*(conf.mailAddress()), title, serializer->to_string(), logPath);
-        mail.send();
+        Mail mail(*(conf.mailAddress()), title, serializer.to_string(), logPath);
+        bool res =mail.send();
+        if(res == false){
+            cerr << "Something wicked happened when sending the mail. It may not have been sent." << endl;
+            // At least print it to stdout
+            cout << serializer.to_string() << endl;
+        }
+    }else{
+        // Otherwise, only display to stdout
+        cout << serializer.to_string() << endl;
     }
 
-    delete serializer;
     delete parser;
     return 0;
 }
@@ -58,6 +65,8 @@ int main(int argc, char* argv[]){
     ;
     options.parse_positional({"input"});
 
+
+    // Parse the arguments...
     string conf, type, input;
     try{
         cxxopts::ParseResult args = options.parse(argc, argv);
@@ -74,9 +83,13 @@ int main(int argc, char* argv[]){
         return 1;
     }catch(const exception& e){
         cerr << "Unable to parse arguments: " << e.what() << endl;
+        cerr << endl;
+        cerr << options.help() << endl;
         return 2;
     }
 
+
+    // ...and actually run the checker
     try{
         run(conf, type, input);
     }catch(const exception& e){

@@ -11,7 +11,7 @@ Run `./access-log-supervisor --config /your/config/file --type log-type /var/log
 See `./access-log-supervisor --help` for the available commands, options, and their default values.
 
 ## Input formats
-Several input formats are available. \
+Several log input formats are available. \
 See the `src/parsers/` folder for a list of available parsers.
 
 ## Output
@@ -23,6 +23,7 @@ The output can be mailed in case the config files requires so.
 This project requires these dependancies:
 * libcidr-dev
 * libsqlite3-dev
+* cmake (to build a static dependancy)
 
 Do not forget to also fetch the submodules (`git submodule init; git submodule update`) so that you can build the required static dependancies.
 

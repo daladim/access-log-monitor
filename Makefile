@@ -118,6 +118,14 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 MKDIR_P ?= mkdir -p
 
 
+install: $(BUILD_DIR)/$(MAIN_EXEC)
+	$(MKDIR_P) $(DESTDIR)$(PREFIX)/bin
+	install -o supervision -g supervision -m 755 $(BUILD_DIR)/$(MAIN_EXEC) $(DESTDIR)$(PREFIX)/bin/access-log-supervisor
+
+uninstall:
+	rm $(DESTDIR)$(PREFIX)/bin/access-log-supervisor
+
+
 # static libs
 libs/yaml-cpp/build/libyaml-cpp.a:
 	@echo "====================================================================="

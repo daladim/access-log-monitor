@@ -25,13 +25,16 @@ private:
     static const string sUserName;
     static const string sTable;
     static const string sCounter;
+    static const string sFailed;
     static const string sRowStyleOK[];
     static const string sRowStyleWarning[];
     static const string sRowStyleCritical[];
 
-    ostream& userHeader(ostream& lhs, const User& user, bool login_succeeded);
+    //! Call this to print a row. It will automatically call ::userHeader and ::userFooter if needed.
     ostream& authRow(ostream& lhs, const shared_ptr<Authentication> auth, unsigned int* iRow, User* curUser);
-    ostream& userFooter(ostream& lhs);
+
+    ostream& userHeader(ostream& lhs, const User& user, bool login_succeeded);  //!< Usually called by ::authRow
+    ostream& userFooter(ostream& lhs);                                          //!< Usually called by ::authRow
 };
 
 } // namespace

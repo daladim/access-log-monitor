@@ -33,7 +33,9 @@ string Timestamp::to_string(const char* fmt) const{
     std::time_t now_c = std::chrono::system_clock::to_time_t(tp);
     std::tm* now_tm = std::localtime(&now_c);
     strftime(sz, buffer-1, fmt, now_tm);
-    return string(sz);
+    string ret(sz);
+    free(sz);
+    return ret;
 }
 
 } // namespace

@@ -16,7 +16,7 @@ public:
     bool send() const;
 
 private:
-    static constexpr char* mail_binary = "/usr/sbin/sendmail";
+    static constexpr const char* mail_binary = "/usr/sbin/sendmail";
     const std::string recipient;
     const std::string subject;
     const std::string content;

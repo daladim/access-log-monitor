@@ -24,7 +24,7 @@
 //
 // TODO: why not with stringstreams?
 //
-bool execWithStdin(const char* command, char* const args[], char* const env[], const char* stdin){
+bool execWithStdin(const char* command, const char* const args[], const char* const env[], const char* stdin){
     int aStdinPipe[2];
     int aStdoutPipe[2];
     int pidChild;
@@ -69,7 +69,7 @@ bool execWithStdin(const char* command, char* const args[], char* const env[], c
 
         // run child process image
         // replace this with any exec* function find easier to use ("man exec")
-        nResult = execve(command, args, env);
+        nResult = execve(command, (char* const*)args, (char* const*)env);
 
         // if we get here at all, an error occurred, but we are in the child
         // process, so just exit

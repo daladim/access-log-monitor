@@ -30,12 +30,19 @@ void Auth::parseLog(){
 }
 
 optional<LogSupervisor::Authentication> Auth::parseLine(const std::string& line){
-    //                          TS     host   proc   PID                                user              IP
-    regex re_success_pk(R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted publickey for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
-    regex re_success_pw(R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted password for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+    // Regexes can be expensive (both at building and at using)
+    // Fail early if it can. Luckily enough, we can filter interesting lines quite easily
+    if(line.find("from") == string::npos){
+        return {};
+    }
 
-    //                          TS     host   proc   PID                                          user              IP
-    regex re_failed(    R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Failed password for invalid user\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+    // Build the regex objects, only once if the lifetime of the program!
+    //                                 TS     host   proc   PID                                user              IP
+    static regex re_success_pk(R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted publickey for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+    static regex re_success_pw(R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Accepted password for\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
+
+    //                                 TS     host   proc   PID                                          user              IP
+    static regex re_failed(    R"raw(^(.*)\s+[^\s]+\s+.*\[[0-9]+\]: Failed password for invalid user\s+([^\s]+)\s+from\s+([^\s]+)\s.*)raw");
 
     smatch matches;
     if(regex_search(line, matches, re_success_pk)){

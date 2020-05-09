@@ -30,8 +30,11 @@ void Apache::parseLog(){
 }
 
 optional<LogSupervisor::Authentication> Apache::parseLine(const std::string& line){
-    //                          IP                 user
-    regex re_apache(R"raw(^\s?([^\s]+)\s+[^\s]+\s+([^\s]+)\s+\[.+)raw");
+    // Regexes can be expensive (both at building and at using)
+    // We only build them once in the lifetime of the program
+
+    //                                  IP                 user
+    static regex re_apache(R"raw(^\s?([^\s]+)\s+[^\s]+\s+([^\s]+)\s+\[.+)raw");
 
     smatch matches;
     if(regex_search(line, matches, re_apache)){

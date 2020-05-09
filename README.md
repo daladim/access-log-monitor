@@ -20,7 +20,7 @@ See the `src/serializers/` folder for a list of available serializers. \
 The output can be mailed in case the config files requires so.
 
 # How to build
-This project requires these dependancies:
+Building this project requires these dependancies:
 * libcidr-dev
 * libsqlite3-dev
 * cmake (to build a static dependancy)
@@ -29,6 +29,11 @@ Do not forget to also fetch the submodules (`git submodule init; git submodule u
 
 Run `make` to build to app. \
 Run `make test` to build the test suite, which can be run with `build/tests`.
+
+Running this project requires these dependancies:
+* libcidr
+* libsqlite3
+* (optionally) a working `sendmail` setup in case you want the program to be able to send you summary e-mails.
 
 # Developer documentation
 A Doxygen documentation is available. Run `make doc` to generate it. Open it via `doc/developer-documentation.html`

@@ -43,35 +43,43 @@ ostream& HTML::userFooter(ostream& lhs){
     return (lhs << "</table></div>");
 }
 
-ostream& HTML::authRow(ostream& lhs, const shared_ptr<Authentication> auth, unsigned int* iRow, User* curUser){
-    if(iRow == 0 || *curUser != auth->user){
-        if(*iRow > 0){
+ostream& HTML::authRow(ostream& lhs, const shared_ptr<Authentication> auth, State& state){
+    if(state.iRow == 0 || state.curUser != auth->user){
+        if(state.iRow > 0){
             userFooter(lhs);
         }
-        userHeader(lhs, auth->user, auth->success);
-        *curUser = auth->user;
-        *iRow = 0;
+
+        state.curUser = auth->user;
+        state.iRow = 0;
+        state.iUser++;
+        if(state.iUser < limitUsers){
+            userHeader(lhs, auth->user, auth->success);
+        }else{
+            if(state.iUser == limitUsers){
+                lhs << "... (too many users to show)\n";
+                return;
+            }
+        }
     }
 
     string rowStyle;
     if(auth->validity == Authentication::Validity::OK()){
-        rowStyle = sRowStyleOK[*iRow % 2];
+        rowStyle = sRowStyleOK[state.iRow % 2];
     }else if(auth->validity == Authentication::Validity::Warning()){
-        rowStyle = sRowStyleWarning[*iRow % 2];
+        rowStyle = sRowStyleWarning[state.iRow % 2];
     }else{
-        rowStyle = sRowStyleCritical[*iRow % 2];
+        rowStyle = sRowStyleCritical[state.iRow % 2];
     }
 
-    const int rowLimit = 15;
     lhs << "<tr style='" << rowStyle << "'>";
-    if(*iRow == rowLimit){
+    if(state.iRow == limitRowsPerUser){
         lhs << "<td>... (too many results)</td>\n";
-    }else if(*iRow < rowLimit){
+    }else if(state.iRow < limitRowsPerUser){
         lhs << "<td><span style='" << sCounter << "'>" << auth->count << "x </span>";
         lhs << *(auth->origin.to_string()) << "</td>";
         lhs << "<td align='right'>" << auth->description << "</td></tr>\n";
     }
-    ++(*iRow);
+    ++(state.iRow);
     return lhs;
 }
 
@@ -81,17 +89,16 @@ ostream& HTML::serialize(ostream& lhs){
     // It is safer to rather have the style hard-coded in every tag
 
     lhs << "<br><br><b>succeded</b> logins" << endl;
-    User curUser;
-    unsigned int iRow = 0;
+    State state;
     for(const shared_ptr<Authentication> auth : db.successes()){
-        authRow(lhs, auth, &iRow, &curUser);
+        authRow(lhs, auth, state);
     }
     userFooter(lhs);
 
 
     lhs << "<br><br>The following are <b>failed</b> logins" << endl;
     for(const shared_ptr<Authentication> auth : db.failures()){
-        authRow(lhs, auth, &iRow, &curUser);
+        authRow(lhs, auth, state);
     }
     userFooter(lhs);
     lhs << "\n";

@@ -18,6 +18,14 @@ public:
     virtual ~HTML() {}
 
 private:
+    //! The internal state of the authRow() function
+    class State{
+    public:
+        User curUser;
+        unsigned int iRow = 0;
+        unsigned int iUser = 0;
+    };
+
     const Database& db;
 
     // various HTML styles
@@ -30,8 +38,12 @@ private:
     static const string sRowStyleWarning[];
     static const string sRowStyleCritical[];
 
+    // Some constants
+    static const unsigned int limitUsers = 100;
+    static const unsigned int limitRowsPerUser = 15;
+
     //! Call this to print a row. It will automatically call ::userHeader and ::userFooter if needed.
-    ostream& authRow(ostream& lhs, const shared_ptr<Authentication> auth, unsigned int* iRow, User* curUser);
+    ostream& authRow(ostream& lhs, const shared_ptr<Authentication> auth, State& state);
 
     ostream& userHeader(ostream& lhs, const User& user, bool login_succeeded);  //!< Usually called by ::authRow
     ostream& userFooter(ostream& lhs);                                          //!< Usually called by ::authRow

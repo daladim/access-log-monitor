@@ -85,7 +85,7 @@ TEST_OBJS += $(TEST_STATIC_LIBS)
 CPPFLAGS ?= -MMD -MP
 # Other flags
 CPPFLAGS += -std=c++17 -Wall -Wextra
-CPPFLAGS += -DGIT_VERSION_STRING='"$(shell git describe --tags)"'
+CPPFLAGS += -DGIT_VERSION_STRING='"$(shell git describe --tags --dirty)"'
 
 
 # libs

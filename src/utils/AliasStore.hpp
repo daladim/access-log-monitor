@@ -39,7 +39,7 @@ public:
                 // Add either an existing alias...
                 std::vector<Content>& aliased = aliases.at(value);
                 list.insert(list.end(), aliased.begin(), aliased.end() );
-            }catch(std::out_of_range){
+            }catch(const std::out_of_range&){
                 // ...or a new Content object
                 try{
                     list.push_back( Content(value) );
@@ -56,7 +56,7 @@ public:
         try{
             // Return either an existing alias...
             return aliases.at(key);
-        }catch(std::out_of_range){
+        }catch(const std::out_of_range&){
             // ...or a new Content object
             try{
                 return{ Content(key) };

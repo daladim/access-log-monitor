@@ -7,7 +7,11 @@ namespace LogSupervisor::LogParser{
 
 Apache::Apache(const string& filePath) :
     logFile(filePath)
-{}
+{
+    if(logFile.fail()){
+        throw runtime_error(string("Unable to open file ") + filePath + ": " + strerror(errno));
+    }
+}
 
 std::string Apache::humanReadableLogType() const{
     return "Apache log files";

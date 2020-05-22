@@ -7,7 +7,11 @@ namespace LogSupervisor::LogParser{
 
 Auth::Auth(const string& filePath) :
     logFile(filePath)
-{}
+{
+    if(logFile.fail()){
+        throw runtime_error(string("Unable to open ") + filePath + ": " + strerror(errno));
+    }
+}
 
 std::string Auth::humanReadableLogType() const{
     return "SSH log checks";

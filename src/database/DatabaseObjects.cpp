@@ -6,7 +6,7 @@ using namespace std;
 namespace LogSupervisor{
 using Validity = Authentication::Validity;
 
-Validity::Validity(Value val = Validity::Value::_Undefined) :
+Validity::Validity(Value val) :
     val(val)
 {}
 

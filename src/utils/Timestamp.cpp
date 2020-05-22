@@ -12,7 +12,7 @@ Timestamp::Timestamp(const std::chrono::system_clock::time_point& chronoTs) :
 {}
 
 Timestamp::Timestamp(const std::string& time, const char* fmt) :
-    Timestamp(time.c_str())
+    Timestamp(time.c_str(), fmt)
 {}
 
 Timestamp::Timestamp(const char* time, const char* fmt){

@@ -52,11 +52,11 @@ Request Database::all() const{
 }
 
 Request Database::successes() const{
-    return Request(db.prepare("SELECT * from auths WHERE success=1 ORDER BY user, validity;"));
+    return Request(db.prepare("SELECT * from auths WHERE success=1 ORDER BY user ASC, validity ASC, count DESC;"));
 }
 
 Request Database::failures() const{
-    return Request(db.prepare("SELECT * from auths WHERE success=0 ORDER BY user, validity;"));
+    return Request(db.prepare("SELECT * from auths WHERE success=0 ORDER BY user ASC, validity ASC, count DESC;"));
 }
 
 void Database::updateValidity(int id, Authentication::Validity v){

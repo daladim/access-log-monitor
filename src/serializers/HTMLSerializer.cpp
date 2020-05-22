@@ -45,7 +45,7 @@ ostream& HTML::userFooter(ostream& lhs){
 
 ostream& HTML::authRow(ostream& lhs, const shared_ptr<Authentication> auth, unsigned int* iRow, User* curUser){
     if(iRow == 0 || *curUser != auth->user){
-        if(iRow>0){
+        if(*iRow > 0){
             userFooter(lhs);
         }
         userHeader(lhs, auth->user, auth->success);

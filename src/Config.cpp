@@ -45,14 +45,21 @@ void Config::populateRules(const YAML::Node& yamlRules){
         ParamList<User, User> users;
         ParamList<AddressRange, Address> addrs;
 
+        unsigned int nValidCriteria = 0;
         if(rule["users"]){
             users.insert(userAliases.parse(rule["users"].as<string>()));
+            ++nValidCriteria;
         }
         if(rule["addresses"]){
             addrs.insert(addrAliases.parse(rule["addresses"].as<string>()));
+            ++nValidCriteria;
         }
         string descr = rule["description"].as<string>();
         Authentication::Validity val = rule["status"].as<Authentication::Validity>();
+
+        if(nValidCriteria == 0){
+            cerr << "Warning: the following rule does not have any valid criteria. Are you sure about it? " << rule << endl;
+        }
 
         m_rules.push_back(Rule(users, addrs, descr, val));
     }

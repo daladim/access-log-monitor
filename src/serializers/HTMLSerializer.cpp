@@ -62,10 +62,15 @@ ostream& HTML::authRow(ostream& lhs, const shared_ptr<Authentication> auth, unsi
         rowStyle = sRowStyleCritical[*iRow % 2];
     }
 
+    const int rowLimit = 15;
     lhs << "<tr style='" << rowStyle << "'>";
-    lhs << "<td><span style='" << sCounter << "'>" << auth->count << "x </span>";
-    lhs << *(auth->origin.to_string()) << "</td>";
-    lhs << "<td align='right'>" << auth->description << "</td></tr>\n";
+    if(*iRow == rowLimit){
+        lhs << "<td>... (too many results)</td>\n";
+    }else if(*iRow < rowLimit){
+        lhs << "<td><span style='" << sCounter << "'>" << auth->count << "x </span>";
+        lhs << *(auth->origin.to_string()) << "</td>";
+        lhs << "<td align='right'>" << auth->description << "</td></tr>\n";
+    }
     ++(*iRow);
     return lhs;
 }

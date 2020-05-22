@@ -84,7 +84,7 @@ TEST_OBJS += $(TEST_STATIC_LIBS)
 # For automatic dependancy detection
 CPPFLAGS ?= -MMD -MP
 # Other flags
-CPPFLAGS += -std=c++17
+CPPFLAGS += -std=c++17 -Wall -Wextra
 CPPFLAGS += -DGIT_VERSION_STRING='"$(shell git describe --tags)"'
 
 

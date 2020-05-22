@@ -21,6 +21,8 @@ public:
 
     //! Retrieve the Authentication objects that have been generated when parsing the log file
     virtual std::vector<LogSupervisor::Authentication> all() = 0;
+
+    virtual ~Interface(){};
 };
 
 } // namespace

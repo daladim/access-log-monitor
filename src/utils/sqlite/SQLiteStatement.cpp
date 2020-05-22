@@ -6,9 +6,9 @@ namespace SQLite{
 Statement::Statement(sqlite3* db, sqlite3_stmt* const stmt) :
         preparedStatement(stmt),
         db(db),
-        currentIterator(nullptr),
         hasStepped(false),
-        requestFinished(false)
+        requestFinished(false),
+        currentIterator(nullptr)
 {}
 
 Statement::~Statement(){

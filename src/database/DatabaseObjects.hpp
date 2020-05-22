@@ -48,8 +48,8 @@ public:
         id(id),
         user(user), origin(origin), timestamp(ts), success(success),
         count(count),
-        validity(val),
-        description(descr)
+        description(descr),
+        validity(val)
     {}
 
     const std::optional<int> id;

@@ -27,7 +27,7 @@ bool Mail::send() const{
     msg << "<div><b>Parsed " << logPath << "</b><br>\n";
     msg << "on host " << getHostname() << "<br>\n";
     msg << "by user " << getUserName() << " on " << Timestamp::NOW().to_string() << "<br>\n";
-    msg << "superviser version: " << GIT_VERSION_STRING << "</div>\n";
+    msg << "supervisor version: " << GIT_VERSION_STRING << "</div>\n";
 
     // Add the content itself
     msg << content;

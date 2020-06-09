@@ -57,7 +57,7 @@ ostream& HTML::authRow(ostream& lhs, const shared_ptr<Authentication> auth, Stat
         }else{
             if(state.iUser == limitUsers){
                 lhs << "... (too many users to show)\n";
-                return;
+                return lhs;
             }
         }
     }

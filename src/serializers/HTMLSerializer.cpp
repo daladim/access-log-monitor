@@ -56,7 +56,7 @@ ostream& HTML::authRow(ostream& lhs, const shared_ptr<Authentication> auth, Stat
             userHeader(lhs, auth->user, auth->success);
         }else{
             if(state.iUser == limitUsers){
-                lhs << "... (too many users to show)\n";
+                lhs << "... (too many users to show)<br>\n";
             }
             return lhs;
         }
@@ -94,6 +94,8 @@ ostream& HTML::serialize(ostream& lhs){
         authRow(lhs, auth, state);
     }
     userFooter(lhs);
+    unsigned int succeededUsers = state.iUser;
+    lhs << "(" << succeededUsers << " successful users)<br>" << endl;
 
 
     lhs << "<br><br>The following are <b>failed</b> logins" << endl;
@@ -101,6 +103,7 @@ ostream& HTML::serialize(ostream& lhs){
         authRow(lhs, auth, state);
     }
     userFooter(lhs);
+    lhs << "(" << state.iUser - succeededUsers << " unsuccessful users)<br>" << endl;
     lhs << "\n";
 
     return lhs;

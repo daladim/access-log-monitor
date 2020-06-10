@@ -88,22 +88,22 @@ ostream& HTML::serialize(ostream& lhs){
     // Having the CSS apart is not widely supported in webmails.
     // It is safer to rather have the style hard-coded in every tag
 
-    lhs << "<br><br><b>succeded</b> logins" << endl;
+    lhs << "<br><br><b>succeded</b> logins\n";
     State state;
     for(const shared_ptr<Authentication> auth : db.successes()){
         authRow(lhs, auth, state);
     }
     userFooter(lhs);
     unsigned int succeededUsers = state.iUser;
-    lhs << "(" << succeededUsers << " successful users)<br>" << endl;
+    lhs << "(" << succeededUsers << " successful users)<br>\n";
 
 
-    lhs << "<br><br>The following are <b>failed</b> logins" << endl;
+    lhs << "<br><br>The following are <b>failed</b> logins\n";
     for(const shared_ptr<Authentication> auth : db.failures()){
         authRow(lhs, auth, state);
     }
     userFooter(lhs);
-    lhs << "(" << state.iUser - succeededUsers << " unsuccessful users)<br>" << endl;
+    lhs << "(" << state.iUser - succeededUsers << " unsuccessful users)<br>\n";
     lhs << "\n";
 
     return lhs;
